@@ -12,5 +12,8 @@ namespace player_log.Data
             : base(options)
         {
         }
+
+        public DbSet<Character> Characters { get; set; }
+
     }
 }
