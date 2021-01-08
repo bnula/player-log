@@ -16,6 +16,7 @@ namespace player_log.Data
         public DbSet<Character> Characters { get; set; }
         public DbSet<Quest> Quests { get; set; }
         public DbSet<Companion> Companions { get; set; }
+        public DbSet<Location> Locations { get; set; }
 
     }
 }
