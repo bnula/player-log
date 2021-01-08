@@ -32,7 +32,10 @@ namespace player_log
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("Crowley")));
+            
+            //Add mappings for Repository and Contracts
             services.AddScoped<ICharacterRepository, CharacterRepository>();
+
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
