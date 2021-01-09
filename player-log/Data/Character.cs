@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -56,5 +57,9 @@ namespace player_log.Data
         [Required]
         [DefaultValue(10)]
         public int Charisma { get; set; }
+
+        [ForeignKey("CampaignId")]
+        public string Campaign { get; set; }
+        public int CampaignId { get; set; }
     }
 }
