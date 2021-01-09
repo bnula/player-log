@@ -19,5 +19,6 @@ namespace player_log.Data
         [ForeignKey("CampaignId")]
         public string Campaign { get; set; }
         public int CampaignId { get; set; }
+        public string LocationInventory { get; set; }
     }
 }
