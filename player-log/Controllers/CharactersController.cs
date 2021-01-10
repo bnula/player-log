@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using player_log.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,17 @@ namespace player_log.Controllers
 {
     public class CharactersController : Controller
     {
+        private readonly ICharacterRepository _repo;
+        private readonly IMapper _mapper;
+
+        public CharactersController(
+            ICharacterRepository repo,
+            IMapper mapper)
+        {
+            _repo = repo;
+            _mapper = mapper;
+        }
+
         // GET: CharactersController
         public ActionResult Index()
         {
