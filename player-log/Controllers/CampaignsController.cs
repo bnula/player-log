@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using player_log.Contracts;
+using player_log.Data;
+using player_log.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +27,9 @@ namespace player_log.Controllers
         // GET: CampaignsController
         public ActionResult Index()
         {
-            return View();
+            var campaigns = _repo.FindAll().ToList();
+            var model = _mapper.Map<List<Campaign>, List<ListCampaignsVM>>(campaigns);
+            return View(model);
         }
 
         // GET: CampaignsController/Details/5
