@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace player_log.Mappings
 {
-    public class Mapper : Profile
+    public class Maps : Profile
     {
-        public Mapper()
+        public Maps()
         {
             // map the data class to the view class and vice versa
             CreateMap<Campaign, ListCampaignsVM>().ReverseMap();
