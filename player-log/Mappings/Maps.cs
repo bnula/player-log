@@ -15,6 +15,9 @@ namespace player_log.Mappings
             // map the data class to the view class and vice versa
             CreateMap<Campaign, ListCampaignsVM>().ReverseMap();
             CreateMap<Campaign, CreateCampaignVM>().ReverseMap();
+            CreateMap<Character, CreateCharacterVM>().ReverseMap();
+            CreateMap<Character, EditCharacterVM>().ReverseMap();
+            CreateMap<Character, DetailsCharacterVM>().ReverseMap();
         }
     }
 }
