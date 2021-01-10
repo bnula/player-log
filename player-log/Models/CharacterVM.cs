@@ -9,7 +9,6 @@ namespace player_log.Models
 {
     public class DetailsCharacterVM
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Race { get; set; }
         public string MainClass { get; set; }
@@ -109,6 +108,18 @@ namespace player_log.Models
         [Required]
         [DefaultValue("Please pick a Campaign")]
         public string Campaign { get; set; }
+    }
+
+    public class ListCharactersVM
+    {
+        public string Name { get; set; }
+        public string Race { get; set; }
+        
+        [DisplayName("Class")]
+        public string MainClass { get; set; }
+        public bool Multiclass { get; set; }
+        public string Campaign { get; set; }
+
     }
 
 }
