@@ -18,6 +18,7 @@ namespace player_log.Mappings
             CreateMap<Character, CreateCharacterVM>().ReverseMap();
             CreateMap<Character, EditCharacterVM>().ReverseMap();
             CreateMap<Character, DetailsCharacterVM>().ReverseMap();
+            CreateMap<Character, ListCharactersVM>().ReverseMap();
         }
     }
 }
