@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using player_log.Contracts;
 using player_log.Data;
+using player_log.Mappings;
 using player_log.Repository;
 using System;
 using System.Collections.Generic;
@@ -33,8 +35,11 @@ namespace player_log
                 options.UseSqlServer(
                     Configuration.GetConnectionString("Crowley")));
             
-            //Add mappings for Repository and Contracts
+            // Add mappings for Repository and Contracts
             services.AddScoped<ICharacterRepository, CharacterRepository>();
+
+            // add mapping for mappings
+            services.AddAutoMapper(typeof(Maps));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
