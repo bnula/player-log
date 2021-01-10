@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using player_log.Models;
 
 namespace player_log.Data
 {
@@ -18,6 +19,7 @@ namespace player_log.Data
         public DbSet<Companion> Companions { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
+        public DbSet<ListCharactersVM> ListCharactersVM { get; set; }
 
     }
 }
