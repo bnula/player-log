@@ -9,6 +9,7 @@ namespace player_log.Models
 {
     public class DetailsCharacterVM
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Race { get; set; }
         public string MainClass { get; set; }
@@ -27,6 +28,7 @@ namespace player_log.Models
 
     public class CreateCharacterVM
     {
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         
@@ -68,6 +70,7 @@ namespace player_log.Models
 
     public class EditCharacterVM
     {
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
 
@@ -112,6 +115,7 @@ namespace player_log.Models
 
     public class ListCharactersVM
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Race { get; set; }
         
