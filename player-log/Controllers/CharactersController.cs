@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using player_log.Contracts;
+using player_log.Data;
+using player_log.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +27,12 @@ namespace player_log.Controllers
         // GET: CharactersController
         public ActionResult Index()
         {
-            return View();
+            // call the functions to retrieve all the records from the Db
+            var characters = _repo.FindAll().ToList();
+            // map the list of items to the ViewModel
+            var model = _mapper.Map<List<Character>, List<ListCharactersVM>>(characters);
+            // return the View using the mapped items
+            return View(model);
         }
 
         // GET: CharactersController/Details/5
