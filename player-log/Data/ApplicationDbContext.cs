@@ -20,6 +20,7 @@ namespace player_log.Data
         public DbSet<Location> Locations { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<ListCharactersVM> ListCharactersVM { get; set; }
+        public DbSet<ListCampaignsVM> ListCampaignsVM { get; set; }
 
     }
 }
