@@ -73,22 +73,36 @@ namespace player_log.Controllers
         // GET: CompanionController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            // retrieve the item from the db based on id
+            var item = _repo.FindById(id);
+            // map the item to the ViewModel
+            var model = _mapper.Map<CompanionEditVM>(item);
+            // return the view with the data
+            return View(model);
         }
 
         // POST: CompanionController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(CompanionEditVM model)
         {
-            try
+            // check if there are any validation errors
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            catch
+            // map the item to the DataModel
+            var item = _mapper.Map<Companion>(model);
+            // check if the operation was successful
+            var isSuccess = _repo.Update(item);
+
+            if (!isSuccess)
             {
-                return View();
+                ModelState.AddModelError("", "Something went wrong..");
+                return View(model);
             }
+            // return to Index
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: CompanionController/Delete/5
