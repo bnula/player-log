@@ -21,9 +21,9 @@ namespace player_log.Data
         public DbSet<Campaign> Campaigns { get; set; }
         public DbSet<ListCharactersVM> ListCharactersVM { get; set; }
         public DbSet<ListCampaignsVM> ListCampaignsVM { get; set; }
-        public DbSet<player_log.Models.CreateCampaignVM> CreateCampaignVM { get; set; }
-        public DbSet<player_log.Models.EditCampaignVM> EditCampaignVM { get; set; }
-        public DbSet<player_log.Models.DetailsCampaignVM> DetailsCampaignVM { get; set; }
+        public DbSet<CreateCampaignVM> CreateCampaignVM { get; set; }
+        public DbSet<EditCampaignVM> EditCampaignVM { get; set; }
+        public DbSet<DetailsCampaignVM> DetailsCampaignVM { get; set; }
 
     }
 }
