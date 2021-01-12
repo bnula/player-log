@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<player_log.Models.ListCampaignsVM>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Campaign List";
 }
 
-<h1>Index</h1>
+<h1>Camapign List</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -31,11 +28,15 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <button class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class=""></i> Edit</button>
+                <button class="btn btn-success" asp-action="Details" asp-route-id="@item.Id"><i class=""></i> Details</button>
+                <button class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class=""></i> Delete</button>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<p>
+    <button type="button" class="btn btn-primary" asp-action="Create">Create New Campaign</button>
+</p>
