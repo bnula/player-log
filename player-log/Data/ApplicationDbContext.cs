@@ -25,6 +25,7 @@ namespace player_log.Data
         public DbSet<CampaignEditVM> CampaignEditVM { get; set; }
         public DbSet<CampaignDetailsVM> CampaignDetailsVM { get; set; }
         public DbSet<CompanionListVM> CompanionListVM { get; set; }
+        public DbSet<CompanionDetailsVM> CompanionDetailsVM { get; set; }
 
     }
 }

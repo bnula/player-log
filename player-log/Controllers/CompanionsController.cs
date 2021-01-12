@@ -36,7 +36,12 @@ namespace player_log.Controllers
         // GET: CompanionController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            // retrieve the item from the db based on id
+            var item = _repo.FindById(id);
+            // map the item to the ViewModel
+            var model = _mapper.Map<CompanionDetailsVM>(item);
+            // return the view with the model data
+            return View(model);
         }
 
         // GET: CompanionController/Create
