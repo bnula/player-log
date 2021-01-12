@@ -19,11 +19,11 @@ namespace player_log.Data
         public DbSet<Companion> Companions { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
-        public DbSet<ListCharactersVM> ListCharactersVM { get; set; }
-        public DbSet<ListCampaignsVM> ListCampaignsVM { get; set; }
-        public DbSet<CreateCampaignVM> CreateCampaignVM { get; set; }
-        public DbSet<EditCampaignVM> EditCampaignVM { get; set; }
-        public DbSet<DetailsCampaignVM> DetailsCampaignVM { get; set; }
+        public DbSet<CharacterListVM> CharacterListVM { get; set; }
+        public DbSet<CampaignListVM> CampaignListVM { get; set; }
+        public DbSet<CampaignCreateVM> CampaignCreateVM { get; set; }
+        public DbSet<CampaignEditVM> CampaignEditVM { get; set; }
+        public DbSet<CampaignDetailsVM> CampaignDetailsVM { get; set; }
 
     }
 }
