@@ -76,22 +76,53 @@ namespace player_log.Controllers
 
         // GET: CampaignsController/Edit/5
         public ActionResult Edit(int id)
+        // GET method to display the Edit page
         {
-            return View();
+            // check if an item with the id exists
+            if (!_repo.RecordExists(id))
+            {
+                return NotFound();
+            }
+
+            // find the item with the given id
+            var campaign = _repo.FindById(id);
+            // map the item to the EditCampaignVM
+            var model = _mapper.Map<EditCampaignVM>(campaign);
+            // display the view with the model data
+            return View(model);
         }
 
         // POST: CampaignsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(EditCampaignVM model)
+        // POST method for updating the Db
         {
             try
             {
+                // check if the model is valid
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                // map the EditCampaignVM to the data model
+                var campaign = _mapper.Map<Campaign>(model);
+                // run Update Db function and create a variable for whether the operation was successful
+                var isSuccess = _repo.Update(campaign);
+
+                if (!isSuccess)
+                {
+                    ModelState.AddModelError("", "Something went wrong..");
+                    return View(model);
+                }
+                // return to Index
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("", "Something went wrong..");
+                return View(model);
             }
         }
 
