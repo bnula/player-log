@@ -35,7 +35,19 @@ namespace player_log.Controllers
         // GET: CampaignsController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            // check if an item with a given id exists
+            if (!_repo.RecordExists(id))
+            {
+                return NotFound();
+            }
+
+            // retrieve the item from the Db using the id
+            var campaignDetail = _repo.FindById(id);
+            // map the item to the ViewModel
+            var model = _mapper.Map<CampaignDetailsVM>(campaignDetail);
+
+            // return the view
+            return View(model);
         }
 
         // GET: CampaignsController/Create
@@ -126,25 +138,26 @@ namespace player_log.Controllers
             }
         }
 
-        // GET: CampaignsController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            // check if the record with a given id exists
+            if (!_repo.RecordExists(id))
+            {
+                return NotFound();
+            }
+
+            // find the record in the Db
+            var campaign = _repo.FindById(id);
+
+            // check whether the operation was successful
+            var isSuccess = _repo.Delete(campaign);
+
+            if (!isSuccess)
+            {
+                return BadRequest();
+            }
+            return RedirectToAction(nameof(Index));
         }
 
-        // POST: CampaignsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
