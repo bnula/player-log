@@ -40,6 +40,7 @@ namespace player_log.Controllers
 
         // GET: CampaignsController/Create
         public ActionResult Create()
+        // GET function to display Create page
         {
             return View();
         }
@@ -47,16 +48,30 @@ namespace player_log.Controllers
         // POST: CampaignsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CreateCampaignVM model)
+        // POST function to send the data from Create page to the Db
         {
-            try
+            // check if there are any validation errors and return the same view if there are
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            catch
+
+            // take the CreateCampaignVM and map it to Camapign DataModel
+            var campaign = _mapper.Map<Campaign>(model);
+
+            // run Create Db function and create a variable for whether the operation was successful
+            var isSuccess = _repo.Create(campaign);
+
+            // validate the succes of the operation
+            if (!isSuccess)
             {
-                return View();
+                ModelState.AddModelError("", "Something went wrong..");
+                return View(model);
             }
+
+            //return to the Index page
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: CampaignsController/Edit/5
