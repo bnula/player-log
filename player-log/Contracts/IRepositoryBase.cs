@@ -13,5 +13,6 @@ namespace player_log.Contracts
         bool Update(T entity);
         bool Delete(T entity);
         bool Save();
+        bool RecordExists(int id);
     }
 }
