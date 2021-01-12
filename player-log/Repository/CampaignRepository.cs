@@ -39,6 +39,13 @@ namespace player_log.Repository
             return item;
         }
 
+        public bool RecordExists(int id)
+        {
+            // lambda expression to look for any record with the given Id
+            var exists = _db.Campaigns.Any(q => q.Id == id);
+            return exists;
+        }
+
         public bool Save()
         {
             var changes = _db.SaveChanges();

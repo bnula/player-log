@@ -44,6 +44,12 @@ namespace player_log.Repository
             return item;
         }
 
+        public bool RecordExists(int id)
+        {
+            var exists = _db.Characters.Any(q => q.Id == id);
+            return exists;
+        }
+
         public bool Save()
         {
             // save any changes done to the Db and return true if there has been at least 1 change
