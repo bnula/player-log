@@ -23,6 +23,7 @@ namespace player_log.Data
         public DbSet<ListCampaignsVM> ListCampaignsVM { get; set; }
         public DbSet<player_log.Models.CreateCampaignVM> CreateCampaignVM { get; set; }
         public DbSet<player_log.Models.EditCampaignVM> EditCampaignVM { get; set; }
+        public DbSet<player_log.Models.DetailsCampaignVM> DetailsCampaignVM { get; set; }
 
     }
 }
