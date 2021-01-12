@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using player_log.Contracts;
+using player_log.Data;
 using player_log.Models;
 using System;
 using System.Collections.Generic;
@@ -53,16 +54,20 @@ namespace player_log.Controllers
         // POST: CompanionController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CompanionCreateVM model)
         {
-            try
+            // check whether there are any validation errors
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            catch
-            {
-                return View();
-            }
+
+            // convert the data into the DataModel
+            var item = _mapper.Map<Companion>(model);
+            // check whether the operation was successful
+            var isSuccess = _repo.Create(item);
+            // return to the Index
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: CompanionController/Edit/5
