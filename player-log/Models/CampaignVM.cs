@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace player_log.Models
 {
-    public class ListCampaignsVM
+    public class CampaignListVM
     {
         public int Id { get; set; }
 
@@ -15,7 +15,7 @@ namespace player_log.Models
         public string Description { get; set; }
     }
 
-    public class CreateCampaignVM
+    public class CampaignCreateVM
     {
         public int Id { get; set; }
 
@@ -24,7 +24,7 @@ namespace player_log.Models
         public string Description { get; set; }
     }
 
-    public class EditCampaignVM
+    public class CampaignEditVM
     {
         public int Id { get; set; }
         
@@ -33,7 +33,7 @@ namespace player_log.Models
         public string Description { get; set; }
     }
 
-    public class DetailsCampaignVM
+    public class CampaignDetailsVM
     {
         public int Id { get; set; }
 
