@@ -27,7 +27,7 @@ namespace player_log.Data
         public DbSet<CompanionListVM> CompanionListVM { get; set; }
         public DbSet<CompanionDetailsVM> CompanionDetailsVM { get; set; }
         public DbSet<CompanionCreateVM> CompanionCreateVM { get; set; }
-        public DbSet<player_log.Models.CompanionEditVM> CompanionEditVM { get; set; }
+        public DbSet<CompanionEditVM> CompanionEditVM { get; set; }
 
     }
 }
