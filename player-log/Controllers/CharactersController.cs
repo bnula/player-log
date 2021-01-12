@@ -30,7 +30,7 @@ namespace player_log.Controllers
             // call the functions to retrieve all the records from the Db
             var characters = _repo.FindAll().ToList();
             // map the list of items to the ViewModel
-            var model = _mapper.Map<List<Character>, List<ListCharactersVM>>(characters);
+            var model = _mapper.Map<List<Character>, List<CharacterListVM>>(characters);
             // return the View using the mapped items
             return View(model);
         }

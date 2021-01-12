@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace player_log.Models
 {
-    public class DetailsCharacterVM
+    public class CharacterDetailsVM
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -26,7 +26,7 @@ namespace player_log.Models
         public string Campaign { get; set; }
     }
 
-    public class CreateCharacterVM
+    public class CharacterCreateVM
     {
         public int Id { get; set; }
         [Required]
@@ -68,7 +68,7 @@ namespace player_log.Models
         public string Campaign { get; set; }
     }
 
-    public class EditCharacterVM
+    public class CharacterEditVM
     {
         public int Id { get; set; }
         [Required]
@@ -113,7 +113,7 @@ namespace player_log.Models
         public string Campaign { get; set; }
     }
 
-    public class ListCharactersVM
+    public class CharacterListVM
     {
         public int Id { get; set; }
         public string Name { get; set; }
