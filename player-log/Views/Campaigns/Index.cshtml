@@ -28,9 +28,9 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                <button class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></button>
-                <button class="btn btn-success" asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-list"></i></button>
-                <button class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></button>
+                <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
+                <a class="btn btn-success" asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-list"></i></a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i></a>
             </td>
         </tr>
 }
