@@ -17,10 +17,16 @@ namespace player_log.Mappings
             CreateMap<Campaign, CampaignCreateVM>().ReverseMap();
             CreateMap<Campaign, CampaignEditVM>().ReverseMap();
             CreateMap<Campaign, CampaignDetailsVM>().ReverseMap();
+            
             CreateMap<Character, CharacterCreateVM>().ReverseMap();
             CreateMap<Character, CharacterEditVM>().ReverseMap();
             CreateMap<Character, CharacterDetailsVM>().ReverseMap();
             CreateMap<Character, CharacterListVM>().ReverseMap();
+            
+            CreateMap<Companion, CompanionCreateVM>().ReverseMap();
+            CreateMap<Companion, CompanionDetailsVM>().ReverseMap();
+            CreateMap<Companion, CompanionEditVM>().ReverseMap();
+            CreateMap<Companion, CompanionListVM>().ReverseMap();
         }
     }
 }
