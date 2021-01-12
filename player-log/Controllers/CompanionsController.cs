@@ -37,6 +37,11 @@ namespace player_log.Controllers
         // GET: CompanionController/Details/5
         public ActionResult Details(int id)
         {
+            // check wheter record with the given id exists
+            if (!_repo.RecordExists(id))
+            {
+                return NotFound();
+            }
             // retrieve the item from the db based on id
             var item = _repo.FindById(id);
             // map the item to the ViewModel
@@ -66,6 +71,12 @@ namespace player_log.Controllers
             var item = _mapper.Map<Companion>(model);
             // check whether the operation was successful
             var isSuccess = _repo.Create(item);
+
+            if (!isSuccess)
+            {
+                ModelState.AddModelError("", "Something went wrong..");
+                return View(model);
+            }
             // return to the Index
             return RedirectToAction(nameof(Index));
         }
@@ -73,6 +84,11 @@ namespace player_log.Controllers
         // GET: CompanionController/Edit/5
         public ActionResult Edit(int id)
         {
+            // check if the record with the given id exists
+            if (!_repo.RecordExists(id))
+            {
+                return NotFound();
+            }
             // retrieve the item from the db based on id
             var item = _repo.FindById(id);
             // map the item to the ViewModel
