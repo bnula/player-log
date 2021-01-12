@@ -124,22 +124,23 @@ namespace player_log.Controllers
         // GET: CompanionController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: CompanionController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            // check whether the record with the given id exists
+            if (!_repo.RecordExists(id))
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
+            // find the item based on the id
+            var item = _repo.FindById(id);
+            // check whether the operation was successful
+            var isSuccess = _repo.Delete(item);
+
+            if (!isSuccess)
             {
+                ModelState.AddModelError("", "Something went wrong..");
                 return View();
             }
+            
+            return View();
         }
     }
 }
