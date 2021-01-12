@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using player_log.Contracts;
+using player_log.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +12,25 @@ namespace player_log.Controllers
 {
     public class CompanionsController : Controller
     {
+        private readonly ICompanionRepository _repo;
+        private readonly IMapper _mapper;
+
+        public CompanionsController(
+            ICompanionRepository repo,
+            IMapper mapper)
+        {
+            _repo = repo;
+            _mapper = mapper;
+        }
         // GET: CompanionController
         public ActionResult Index()
         {
-            return View();
+            // load all of the records in the Db table
+            var items = _repo.FindAll();
+            // map the records to a ViewModel
+            var model = _mapper.Map<List<CompanionListVM>>(items);
+            // return the view with the data
+            return View(model);
         }
 
         // GET: CompanionController/Details/5
