@@ -80,6 +80,11 @@ namespace player_log.Controllers
         // GET: CharactersController/Edit/5
         public ActionResult Edit(int id)
         {
+            // check if the item with the given id exists
+            if (!_repo.RecordExists(id))
+            {
+                return NotFound();
+            }
             // retrieve the item from the db based on id
             var item = _repo.FindById(id);
             // map the data to a view model
@@ -91,37 +96,49 @@ namespace player_log.Controllers
         // POST: CharactersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(CharacterEditVM model)
         {
-            try
+            // check for any validation errors
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError("", "Something went wrong..");
+                return View(model);
             }
-            catch
+            // map the item to data model
+            var item = _mapper.Map<Character>(model);
+            // check if the operation was successful
+            var isSuccess = _repo.Update(item);
+
+            if (!isSuccess)
             {
-                return View();
+                ModelState.AddModelError("", "Something went wrong..");
+                return View(model);
             }
+            // return to Index
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: CharactersController/Delete/5
         public ActionResult Delete(int id)
         {
+            // check if the item with given id exists
+            if (!_repo.RecordExists(id))
+            {
+                return NotFound();
+            }
+            // find the item with the given id
+            var item = _repo.FindById(id);
+            // remove the item
+            var isSuccess = _repo.Delete(item);
+            // check whether the operation was successful
+            if (!isSuccess)
+            {
+                ModelState.AddModelError("", "Something went wrong..");
+                return View();
+            }
+
             return View();
         }
 
-        // POST: CharactersController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

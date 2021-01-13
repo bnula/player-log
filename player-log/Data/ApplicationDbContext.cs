@@ -30,6 +30,7 @@ namespace player_log.Data
         public DbSet<CompanionEditVM> CompanionEditVM { get; set; }
         public DbSet<CharacterDetailsVM> CharacterDetailsVM { get; set; }
         public DbSet<CharacterCreateVM> CharacterCreateVM { get; set; }
+        public DbSet<CharacterEditVM> CharacterEditVM { get; set; }
 
     }
 }
