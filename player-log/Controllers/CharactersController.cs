@@ -55,22 +55,37 @@ namespace player_log.Controllers
         // POST: CharactersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CharacterCreateVM model)
         {
-            try
+            // check if there are any validation errors
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                return View(model);
             }
-            catch
+
+            // map the viewmodel to datamodel
+            var item = _mapper.Map<Character>(model);
+            // check if the operation was successful
+            var isSuccess = _repo.Create(item);
+
+            if (!isSuccess)
             {
-                return View();
+                ModelState.AddModelError("", "Something went wrong..");
+                return View(model);
             }
+            // return to index
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: CharactersController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            // retrieve the item from the db based on id
+            var item = _repo.FindById(id);
+            // map the data to a view model
+            var model = _mapper.Map<CharacterEditVM>(item);
+            // return the view with the model data
+            return View(model);
         }
 
         // POST: CharactersController/Edit/5
