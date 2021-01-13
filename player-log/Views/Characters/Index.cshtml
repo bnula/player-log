@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<player_log.Models.CharacterListVM>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Character List";
 }
 
-<h1>Index</h1>
+<h1>Character List</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table id="tblData" class="table">
     <thead>
         <tr>
@@ -57,3 +54,7 @@
 }
     </tbody>
 </table>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create"><i class="fa fa-plus"></i> Create New Character</a>
+</p>

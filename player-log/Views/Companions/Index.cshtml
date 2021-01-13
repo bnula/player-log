@@ -4,11 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>NPC List</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table id="tblData" class="table">
     <thead>
         <tr>
@@ -45,3 +42,7 @@
 }
     </tbody>
 </table>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create"><i class="fa fa-plus"></i> Create New NPC</a>
+</p>
