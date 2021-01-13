@@ -38,7 +38,12 @@ namespace player_log.Controllers
         // GET: CharactersController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            // retrieve the item from the db based oin id
+            var item = _repo.FindById(id);
+            // map the item to the view model
+            var model = _mapper.Map<CharacterDetailsVM>(item);
+            // return view with the model data
+            return View(model);
         }
 
         // GET: CharactersController/Create
