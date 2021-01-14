@@ -1,30 +1,24 @@
-﻿@model player_log.Models.CompanionEditVM
+﻿@model player_log.Models.QuestDetailsVM
 
 @{
-    ViewData["Title"] = "Edit NPC";
+    ViewData["Title"] = "Create New Quest";
 }
 
-<h1>Edit NPC</h1>
+<h1>Create New Quest</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cr" class="control-label"></label>
-                <input asp-for="Cr" class="form-control" />
-                <span asp-validation-for="Cr" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CompanionClass" class="control-label"></label>
-                <input asp-for="CompanionClass" class="form-control" />
-                <span asp-validation-for="CompanionClass" class="text-danger"></span>
+                <label asp-for="MainObjective" class="control-label"></label>
+                <input asp-for="MainObjective" class="form-control" />
+                <span asp-validation-for="MainObjective" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
@@ -32,18 +26,25 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
-                <span asp-validation-for="Location" class="text-danger"></span>
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reward" class="control-label"></label>
+                <input asp-for="Reward" class="form-control" />
+                <span asp-validation-for="Reward" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Campaign" class="control-label"></label>
                 <input asp-for="Campaign" class="form-control" />
                 <span asp-validation-for="Campaign" class="text-danger"></span>
             </div>
-            <div>
-                <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Save</button>
-                <a class="btn btn-secondary" asp-action="Index"><i class="fa fa-ban"></i> Back to List</a>
+            <div class="form-group">
+                <div>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Create</button>
+                    <a class="btn btn-secondary" asp-action="Index"><i class="fa fa-ban"></i> Back to List</a>
+                </div>
             </div>
         </form>
     </div>

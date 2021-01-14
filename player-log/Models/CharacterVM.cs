@@ -62,9 +62,6 @@ namespace player_log.Models
         [Required]
         [DefaultValue(10)]
         public int Charisma { get; set; }
-
-        [Required]
-        [DefaultValue("Please pick a Campaign")]
         public string Campaign { get; set; }
     }
 
@@ -107,9 +104,6 @@ namespace player_log.Models
         [Required]
         [DefaultValue(10)]
         public int Charisma { get; set; }
-
-        [Required]
-        [DefaultValue("Please pick a Campaign")]
         public string Campaign { get; set; }
     }
 

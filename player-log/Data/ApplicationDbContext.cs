@@ -31,6 +31,7 @@ namespace player_log.Data
         public DbSet<CharacterDetailsVM> CharacterDetailsVM { get; set; }
         public DbSet<CharacterCreateVM> CharacterCreateVM { get; set; }
         public DbSet<CharacterEditVM> CharacterEditVM { get; set; }
+        public DbSet<QuestDetailsVM> QuestDetailsVM { get; set; }
 
     }
 }
