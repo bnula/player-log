@@ -27,6 +27,9 @@ namespace player_log.Mappings
             CreateMap<Companion, CompanionDetailsVM>().ReverseMap();
             CreateMap<Companion, CompanionEditVM>().ReverseMap();
             CreateMap<Companion, CompanionListVM>().ReverseMap();
+
+            CreateMap<Quest, QuestListVM>().ReverseMap();
+            CreateMap<Quest, QuestDetailsVM>().ReverseMap();
         }
     }
 }

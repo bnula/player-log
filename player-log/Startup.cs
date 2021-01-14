@@ -39,6 +39,7 @@ namespace player_log
             services.AddScoped<ICharacterRepository, CharacterRepository>();
             services.AddScoped<ICampaignRepository, CampaignRepository>();
             services.AddScoped<ICompanionRepository, CompanionRepository>();
+            services.AddScoped<IQuestRepository, QuestRepository>();
 
             // add mapping for mappings
             services.AddAutoMapper(typeof(Maps));
