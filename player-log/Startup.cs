@@ -54,13 +54,18 @@ namespace player_log
                     options.Password.RequiredUniqueChars = 1;
 
                 })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -80,6 +85,9 @@ namespace player_log
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // seed roles and user to the db
+            // SeedData.Seed(userManager, roleManager);
 
             app.UseEndpoints(endpoints =>
             {
