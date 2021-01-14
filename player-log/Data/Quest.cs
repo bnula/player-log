@@ -14,10 +14,7 @@ namespace player_log.Data
         public string Name { get; set; }
         public string MainObjective { get; set; }
         public string Description { get; set; }
-        
-        [ForeignKey("StartingLocationId")]
-        public string StartingLocation { get; set; }
-        public int StartingLocationId { get; set; }
+        public string Notes { get; set; }
 
         [ForeignKey("CamapignId")]
         public string Campaign { get; set; }
