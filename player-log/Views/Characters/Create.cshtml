@@ -1,12 +1,10 @@
 ﻿@model player_log.Models.CharacterCreateVM
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create New Character";
 }
 
-<h1>Create</h1>
-
-<h4>CharacterCreateVM</h4>
+<h1>Create New Character</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -62,15 +60,15 @@
                 <input asp-for="Campaign" class="form-control" />
                 <span asp-validation-for="Campaign" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <div>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Create</button>
+        <a class="btn btn-secondary" asp-action="Index"><i class="fa fa-ban"></i> Back to List</a>
+    </div>
 </div>
 
 @section Scripts {

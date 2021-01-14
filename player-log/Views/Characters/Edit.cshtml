@@ -1,12 +1,10 @@
 ﻿@model player_log.Models.CharacterEditVM
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Character";
 }
 
-<h1>Edit</h1>
-
-<h4>CharacterEditVM</h4>
+<h1>Edit Character</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -33,16 +31,19 @@
                     <input class="form-check-input" asp-for="Multiclass" /> @Html.DisplayNameFor(model => model.Multiclass)
                 </label>
             </div>
-            <div class="form-group">
-                <label asp-for="SecondClass" class="control-label"></label>
-                <input asp-for="SecondClass" class="form-control" />
-                <span asp-validation-for="SecondClass" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ThirdClass" class="control-label"></label>
-                <input asp-for="ThirdClass" class="form-control" />
-                <span asp-validation-for="ThirdClass" class="text-danger"></span>
-            </div>
+            @if (Model.Multiclass == true)
+            {
+                <div class="form-group">
+                    <label asp-for="SecondClass" class="control-label"></label>
+                    <input asp-for="SecondClass" class="form-control" />
+                    <span asp-validation-for="SecondClass" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ThirdClass" class="control-label"></label>
+                    <input asp-for="ThirdClass" class="form-control" />
+                    <span asp-validation-for="ThirdClass" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
                 <label asp-for="Strength" class="control-label"></label>
                 <input asp-for="Strength" class="form-control" />
@@ -78,15 +79,13 @@
                 <input asp-for="Campaign" class="form-control" />
                 <span asp-validation-for="Campaign" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <input type="submit" value="Save" class="btn btn-primary">
+    <a class="btn btn-secondary" asp-action="Index"><i class="fa fa-ban"></i> Back to List</a>
 </div>
 
 @section Scripts {
