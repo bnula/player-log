@@ -82,43 +82,63 @@ namespace player_log.Controllers
         // GET: QuestsController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            // check if the item with a given id exists
+            if (!_repo.RecordExists(id))
+            {
+                return NotFound();
+            }
+            // retrieve the item with the given id
+            var item = _repo.FindById(id);
+            // map the item to the view model
+            var model = _mapper.Map<QuestDetailsVM>(item);
+            // return the view with the model
+            return View(model);
         }
 
         // POST: QuestsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(QuestDetailsVM model)
         {
-            try
+            // check if there are any validation errors
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError("", "Something went wrong..");
             }
-            catch
+            // convert the view model to a data model
+            var item = _mapper.Map<Quest>(model);
+            // update the item in the db and check if the operation was a success
+            var isSuccess = _repo.Update(item);
+
+            if (!isSuccess)
             {
-                return View();
+                ModelState.AddModelError("", "Something went wrong..");
+                return View(model);
             }
+            // redirect back to index
+            return RedirectToAction(nameof(Index));
+
         }
 
         // GET: QuestsController/Delete/5
         public ActionResult Delete(int id)
         {
+            // check if the item with a given id exists
+            if (!_repo.RecordExists(id))
+            {
+                return NotFound();
+            }
+            // find the item using the given id
+            var item = _repo.FindById(id);
+            // delete the item and check if the operation was successful
+            var isSuccess = _repo.Delete(item);
+
+            if (!isSuccess)
+            {
+                ModelState.AddModelError("", "Something went wrong..");
+            }
             return View();
         }
 
-        // POST: QuestsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
