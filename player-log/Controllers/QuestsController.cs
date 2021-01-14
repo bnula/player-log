@@ -25,7 +25,12 @@ namespace player_log.Controllers
         // GET: QuestsController
         public ActionResult Index()
         {
-            return View();
+            // retrieve all the data from the db
+            var items = _repo.FindAll().ToList();
+            // map the data to view model
+            var model = _mapper.Map<List<QuestListVM>>(items);
+            // return the view with the data
+            return View(model);
         }
 
         // GET: QuestsController/Details/5
@@ -70,7 +75,8 @@ namespace player_log.Controllers
                 ModelState.AddModelError("", "Something went wrong..");
                 return View(model);
             }
-            return Index();
+            // redirect to index
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: QuestsController/Edit/5
