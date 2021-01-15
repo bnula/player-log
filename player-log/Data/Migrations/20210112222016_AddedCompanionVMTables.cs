@@ -14,7 +14,7 @@ namespace player_log.Data.Migrations
                 oldType: "int");
 
             migrationBuilder.CreateTable(
-                name: "CompanionCreateVM",
+                name: "CompanionDetailsVM",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -28,7 +28,7 @@ namespace player_log.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CompanionCreateVM", x => x.Id);
+                    table.PrimaryKey("PK_CompanionDetailsVM", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,7 +50,7 @@ namespace player_log.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CompanionEditVM",
+                name: "CompanionDetailsVM",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -64,7 +64,7 @@ namespace player_log.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CompanionEditVM", x => x.Id);
+                    table.PrimaryKey("PK_CompanionDetailsVM", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,13 +86,13 @@ namespace player_log.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CompanionCreateVM");
+                name: "CompanionDetailsVM");
 
             migrationBuilder.DropTable(
                 name: "CompanionDetailsVM");
 
             migrationBuilder.DropTable(
-                name: "CompanionEditVM");
+                name: "CompanionDetailsVM");
 
             migrationBuilder.DropTable(
                 name: "CompanionListVM");

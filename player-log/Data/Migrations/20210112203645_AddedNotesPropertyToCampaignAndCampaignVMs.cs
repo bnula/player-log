@@ -13,7 +13,7 @@ namespace player_log.Data.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Notes",
-                table: "CampaignEditVM",
+                table: "CampaignDetailsVM",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
@@ -23,7 +23,7 @@ namespace player_log.Data.Migrations
 
             migrationBuilder.AddColumn<string>(
                 name: "Notes",
-                table: "CampaignCreateVM",
+                table: "CampaignDetailsVM",
                 nullable: true);
         }
 
@@ -35,7 +35,7 @@ namespace player_log.Data.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Notes",
-                table: "CampaignEditVM");
+                table: "CampaignDetailsVM");
 
             migrationBuilder.DropColumn(
                 name: "Notes",
@@ -43,7 +43,7 @@ namespace player_log.Data.Migrations
 
             migrationBuilder.DropColumn(
                 name: "Notes",
-                table: "CampaignCreateVM");
+                table: "CampaignDetailsVM");
         }
     }
 }

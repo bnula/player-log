@@ -59,7 +59,7 @@ namespace player_log.Controllers
         // POST: CompanionController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CompanionCreateVM model)
+        public ActionResult Create(CompanionDetailsVM model)
         {
             // check whether there are any validation errors
             if (!ModelState.IsValid)
@@ -92,7 +92,7 @@ namespace player_log.Controllers
             // retrieve the item from the db based on id
             var item = _repo.FindById(id);
             // map the item to the ViewModel
-            var model = _mapper.Map<CompanionEditVM>(item);
+            var model = _mapper.Map<CompanionDetailsVM>(item);
             // return the view with the data
             return View(model);
         }
@@ -100,7 +100,7 @@ namespace player_log.Controllers
         // POST: CompanionController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CompanionEditVM model)
+        public ActionResult Edit(CompanionDetailsVM model)
         {
             // check if there are any validation errors
             if (!ModelState.IsValid)

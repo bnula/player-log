@@ -399,28 +399,6 @@ namespace player_log.Data.Migrations
                     b.ToTable("Quests");
                 });
 
-            modelBuilder.Entity("player_log.Models.CampaignCreateVM", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CampaignCreateVM");
-                });
-
             modelBuilder.Entity("player_log.Models.CampaignDetailsVM", b =>
                 {
                     b.Property<int>("Id")
@@ -441,28 +419,6 @@ namespace player_log.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CampaignDetailsVM");
-                });
-
-            modelBuilder.Entity("player_log.Models.CampaignEditVM", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CampaignEditVM");
                 });
 
             modelBuilder.Entity("player_log.Models.CampaignListVM", b =>
@@ -565,37 +521,6 @@ namespace player_log.Data.Migrations
                     b.ToTable("CharacterListVM");
                 });
 
-            modelBuilder.Entity("player_log.Models.CompanionCreateVM", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Campaign")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanionClass")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Cr")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CompanionCreateVM");
-                });
-
             modelBuilder.Entity("player_log.Models.CompanionDetailsVM", b =>
                 {
                     b.Property<int>("Id")
@@ -625,37 +550,6 @@ namespace player_log.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CompanionDetailsVM");
-                });
-
-            modelBuilder.Entity("player_log.Models.CompanionEditVM", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Campaign")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanionClass")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Cr")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CompanionEditVM");
                 });
 
             modelBuilder.Entity("player_log.Models.CompanionListVM", b =>

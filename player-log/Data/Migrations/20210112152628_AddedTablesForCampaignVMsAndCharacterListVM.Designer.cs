@@ -398,7 +398,7 @@ namespace player_log.Data.Migrations
                     b.ToTable("Quests");
                 });
 
-            modelBuilder.Entity("player_log.Models.CampaignCreateVM", b =>
+            modelBuilder.Entity("player_log.Models.CampaignDetailsVM", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -414,7 +414,7 @@ namespace player_log.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CampaignCreateVM");
+                    b.ToTable("CampaignDetailsVM");
                 });
 
             modelBuilder.Entity("player_log.Models.CampaignDetailsVM", b =>
@@ -436,7 +436,7 @@ namespace player_log.Data.Migrations
                     b.ToTable("CampaignDetailsVM");
                 });
 
-            modelBuilder.Entity("player_log.Models.CampaignEditVM", b =>
+            modelBuilder.Entity("player_log.Models.CampaignDetailsVM", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -452,7 +452,7 @@ namespace player_log.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CampaignEditVM");
+                    b.ToTable("CampaignDetailsVM");
                 });
 
             modelBuilder.Entity("player_log.Models.CampaignListVM", b =>

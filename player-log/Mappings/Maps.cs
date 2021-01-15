@@ -14,19 +14,13 @@ namespace player_log.Mappings
         {
             // map the data class to the view class and vice versa
             CreateMap<Campaign, CampaignListVM>().ReverseMap();
-            CreateMap<Campaign, CampaignCreateVM>().ReverseMap();
-            CreateMap<Campaign, CampaignEditVM>().ReverseMap();
             CreateMap<Campaign, CampaignDetailsVM>().ReverseMap();
-            
-            CreateMap<Character, CharacterDetailsVM>().ReverseMap();
-            CreateMap<Character, CharacterDetailsVM>().ReverseMap();
-            CreateMap<Character, CharacterDetailsVM>().ReverseMap();
+
             CreateMap<Character, CharacterListVM>().ReverseMap();
+            CreateMap<Character, CharacterDetailsVM>().ReverseMap();
             
-            CreateMap<Companion, CompanionCreateVM>().ReverseMap();
-            CreateMap<Companion, CompanionDetailsVM>().ReverseMap();
-            CreateMap<Companion, CompanionEditVM>().ReverseMap();
             CreateMap<Companion, CompanionListVM>().ReverseMap();
+            CreateMap<Companion, CompanionDetailsVM>().ReverseMap();
 
             CreateMap<Quest, QuestListVM>().ReverseMap();
             CreateMap<Quest, QuestDetailsVM>().ReverseMap();

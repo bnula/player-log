@@ -7,7 +7,7 @@ namespace player_log.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CampaignCreateVM",
+                name: "CampaignDetailsVM",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -17,7 +17,7 @@ namespace player_log.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CampaignCreateVM", x => x.Id);
+                    table.PrimaryKey("PK_CampaignDetailsVM", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,7 +35,7 @@ namespace player_log.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CampaignEditVM",
+                name: "CampaignDetailsVM",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -45,7 +45,7 @@ namespace player_log.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CampaignEditVM", x => x.Id);
+                    table.PrimaryKey("PK_CampaignDetailsVM", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,13 +83,13 @@ namespace player_log.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CampaignCreateVM");
+                name: "CampaignDetailsVM");
 
             migrationBuilder.DropTable(
                 name: "CampaignDetailsVM");
 
             migrationBuilder.DropTable(
-                name: "CampaignEditVM");
+                name: "CampaignDetailsVM");
 
             migrationBuilder.DropTable(
                 name: "CampaignListVM");

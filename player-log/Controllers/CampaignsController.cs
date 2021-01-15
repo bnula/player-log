@@ -60,7 +60,7 @@ namespace player_log.Controllers
         // POST: CampaignsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CampaignCreateVM model)
+        public ActionResult Create(CampaignDetailsVM model)
         // POST function to send the data from Create page to the Db
         {
             // check if there are any validation errors and return the same view if there are
@@ -69,7 +69,7 @@ namespace player_log.Controllers
                 return View(model);
             }
 
-            // take the CampaignCreateVM and map it to Camapign DataModel
+            // take the CampaignDetailsVM and map it to Camapign DataModel
             var campaign = _mapper.Map<Campaign>(model);
 
             // run Create Db function and create a variable for whether the operation was successful
@@ -98,8 +98,8 @@ namespace player_log.Controllers
 
             // find the item with the given id
             var campaign = _repo.FindById(id);
-            // map the item to the CampaignEditVM
-            var model = _mapper.Map<CampaignEditVM>(campaign);
+            // map the item to the CampaignDetailsVM
+            var model = _mapper.Map<CampaignDetailsVM>(campaign);
             // display the view with the model data
             return View(model);
         }
@@ -107,7 +107,7 @@ namespace player_log.Controllers
         // POST: CampaignsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CampaignEditVM model)
+        public ActionResult Edit(CampaignDetailsVM model)
         // POST method for updating the Db
         {
             try
@@ -118,7 +118,7 @@ namespace player_log.Controllers
                     return View(model);
                 }
 
-                // map the CampaignEditVM to the data model
+                // map the CampaignDetailsVM to the data model
                 var campaign = _mapper.Map<Campaign>(model);
                 // run Update Db function and create a variable for whether the operation was successful
                 var isSuccess = _repo.Update(campaign);
