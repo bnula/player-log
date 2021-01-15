@@ -55,7 +55,7 @@ namespace player_log.Controllers
         // POST: CharactersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CharacterCreateVM model)
+        public ActionResult Create(CharacterDetailsVM model)
         {
             // check if there are any validation errors
             if (!ModelState.IsValid)
@@ -88,7 +88,7 @@ namespace player_log.Controllers
             // retrieve the item from the db based on id
             var item = _repo.FindById(id);
             // map the data to a view model
-            var model = _mapper.Map<CharacterEditVM>(item);
+            var model = _mapper.Map<CharacterDetailsVM>(item);
             // return the view with the model data
             return View(model);
         }
@@ -96,7 +96,7 @@ namespace player_log.Controllers
         // POST: CharactersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CharacterEditVM model)
+        public ActionResult Edit(CharacterDetailsVM model)
         {
             // check for any validation errors
             if (!ModelState.IsValid)

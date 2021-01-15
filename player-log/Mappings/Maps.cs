@@ -18,8 +18,8 @@ namespace player_log.Mappings
             CreateMap<Campaign, CampaignEditVM>().ReverseMap();
             CreateMap<Campaign, CampaignDetailsVM>().ReverseMap();
             
-            CreateMap<Character, CharacterCreateVM>().ReverseMap();
-            CreateMap<Character, CharacterEditVM>().ReverseMap();
+            CreateMap<Character, CharacterDetailsVM>().ReverseMap();
+            CreateMap<Character, CharacterDetailsVM>().ReverseMap();
             CreateMap<Character, CharacterDetailsVM>().ReverseMap();
             CreateMap<Character, CharacterListVM>().ReverseMap();
             

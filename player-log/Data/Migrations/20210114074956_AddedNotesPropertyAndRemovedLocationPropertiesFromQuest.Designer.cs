@@ -483,7 +483,7 @@ namespace player_log.Data.Migrations
                     b.ToTable("CampaignListVM");
                 });
 
-            modelBuilder.Entity("player_log.Models.CharacterCreateVM", b =>
+            modelBuilder.Entity("player_log.Models.CharacterDetailsVM", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -526,7 +526,7 @@ namespace player_log.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CharacterCreateVM");
+                    b.ToTable("CharacterDetailsVM");
                 });
 
             modelBuilder.Entity("player_log.Models.CharacterDetailsVM", b =>
@@ -583,7 +583,7 @@ namespace player_log.Data.Migrations
                     b.ToTable("CharacterDetailsVM");
                 });
 
-            modelBuilder.Entity("player_log.Models.CharacterEditVM", b =>
+            modelBuilder.Entity("player_log.Models.CharacterDetailsVM", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -635,7 +635,7 @@ namespace player_log.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CharacterEditVM");
+                    b.ToTable("CharacterDetailsVM");
                 });
 
             modelBuilder.Entity("player_log.Models.CharacterListVM", b =>

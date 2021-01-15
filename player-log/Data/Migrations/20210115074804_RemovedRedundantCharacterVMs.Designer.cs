@@ -10,8 +10,8 @@ using player_log.Data;
 namespace player_log.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210114081651_AddedRewardsPropertyToQues")]
-    partial class AddedRewardsPropertyToQues
+    [Migration("20210115074804_RemovedRedundantCharacterVMs")]
+    partial class RemovedRedundantCharacterVMs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -494,52 +494,6 @@ namespace player_log.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Campaign")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Charisma")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Constitution")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Dexterity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Intelligence")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MainClass")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Race")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Strength")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Wisdom")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CharacterDetailsVM");
-                });
-
-            modelBuilder.Entity("player_log.Models.CharacterDetailsVM", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Campaign")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Charisma")
@@ -567,61 +521,6 @@ namespace player_log.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Race")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecondClass")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Strength")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ThirdClass")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Wisdom")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CharacterDetailsVM");
-                });
-
-            modelBuilder.Entity("player_log.Models.CharacterDetailsVM", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Campaign")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Charisma")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Constitution")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Dexterity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Intelligence")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MainClass")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Multiclass")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Race")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecondClass")
@@ -780,6 +679,57 @@ namespace player_log.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CompanionListVM");
+                });
+
+            modelBuilder.Entity("player_log.Models.QuestDetailsVM", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Campaign")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MainObjective")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reward")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuestDetailsVM");
+                });
+
+            modelBuilder.Entity("player_log.Models.QuestListVM", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Campaign")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuestListVM");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

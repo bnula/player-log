@@ -12,97 +12,38 @@ namespace player_log.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Race { get; set; }
-        public string MainClass { get; set; }
-        public bool Multiclass { get; set; }
-        public string SecondClass { get; set; }
-        public string ThirdClass { get; set; }
-        public int Level { get; set; }
-        public int Strength { get; set; }
-        public int Dexterity { get; set; }
-        public int Constitution { get; set; }
-        public int Wisdom { get; set; }
-        public int Intelligence { get; set; }
-        public int Charisma { get; set; }
-        public string Campaign { get; set; }
-    }
 
-    public class CharacterCreateVM
-    {
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; }
+        [DisplayName("Class")]
+        public string MainClass { get; set; }
         
-        [Required]
-        public string Race { get; set; }
-
-        [Required]
-        [DisplayName("Class")]
-        public string MainClass { get; set; }
-
-        [Required]
-        [DefaultValue(10)]
-        public int Strength { get; set; }
-
-        [Required]
-        [DefaultValue(10)]
-        public int Dexterity { get; set; }
-
-        [Required]
-        [DefaultValue(10)]
-        public int Constitution { get; set; }
-
-        [Required]
-        [DefaultValue(10)]
-        public int Wisdom { get; set; }
-
-        [Required]
-        [DefaultValue(10)]
-        public int Intelligence { get; set; }
-
-        [Required]
-        [DefaultValue(10)]
-        public int Charisma { get; set; }
-        public string Campaign { get; set; }
-    }
-
-    public class CharacterEditVM
-    {
-        public int Id { get; set; }
-        [Required]
-        public string Name { get; set; }
-
-        [Required]
-        public string Race { get; set; }
-
-        [Required]
-        [DisplayName("Class")]
-        public string MainClass { get; set; }
+        [DisplayName("Multiclass?")]
         public bool Multiclass { get; set; }
+
+        [DisplayName("Second Class")]
         public string SecondClass { get; set; }
+
+        [DisplayName("Third Class")]
         public string ThirdClass { get; set; }
 
-        [Required]
-        [DefaultValue(10)]
+        [DisplayName("Total Level")]
+        public int Level { get; set; }
+
+        [Range(1,20)]
         public int Strength { get; set; }
 
-        [Required]
-        [DefaultValue(10)]
+        [Range(1, 20)]
         public int Dexterity { get; set; }
 
-        [Required]
-        [DefaultValue(10)]
+        [Range(1, 20)]
         public int Constitution { get; set; }
 
-        [Required]
-        [DefaultValue(10)]
+        [Range(1, 20)]
         public int Wisdom { get; set; }
 
-        [Required]
-        [DefaultValue(10)]
+        [Range(1, 20)]
         public int Intelligence { get; set; }
 
-        [Required]
-        [DefaultValue(10)]
+        [Range(1, 20)]
         public int Charisma { get; set; }
         public string Campaign { get; set; }
     }
@@ -115,6 +56,8 @@ namespace player_log.Models
         
         [DisplayName("Class")]
         public string MainClass { get; set; }
+        
+        [DisplayName("Multiclass?")]
         public bool Multiclass { get; set; }
         public string Campaign { get; set; }
 

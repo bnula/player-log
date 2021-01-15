@@ -7,7 +7,7 @@ namespace player_log.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CharacterCreateVM",
+                name: "CharacterDetailsVM",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -25,7 +25,7 @@ namespace player_log.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CharacterCreateVM", x => x.Id);
+                    table.PrimaryKey("PK_CharacterDetailsVM", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -55,7 +55,7 @@ namespace player_log.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CharacterEditVM",
+                name: "CharacterDetailsVM",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -76,20 +76,20 @@ namespace player_log.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CharacterEditVM", x => x.Id);
+                    table.PrimaryKey("PK_CharacterDetailsVM", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CharacterCreateVM");
+                name: "CharacterDetailsVM");
 
             migrationBuilder.DropTable(
                 name: "CharacterDetailsVM");
 
             migrationBuilder.DropTable(
-                name: "CharacterEditVM");
+                name: "CharacterDetailsVM");
         }
     }
 }

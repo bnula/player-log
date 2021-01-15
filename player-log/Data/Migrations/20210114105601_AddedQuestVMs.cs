@@ -8,14 +8,14 @@ namespace player_log.Data.Migrations
         {
             migrationBuilder.AlterColumn<string>(
                 name: "Campaign",
-                table: "CharacterEditVM",
+                table: "CharacterDetailsVM",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Campaign",
-                table: "CharacterCreateVM",
+                table: "CharacterDetailsVM",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -64,7 +64,7 @@ namespace player_log.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Campaign",
-                table: "CharacterEditVM",
+                table: "CharacterDetailsVM",
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
@@ -72,7 +72,7 @@ namespace player_log.Data.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Campaign",
-                table: "CharacterCreateVM",
+                table: "CharacterDetailsVM",
                 type: "nvarchar(max)",
                 nullable: false,
                 oldClrType: typeof(string),
