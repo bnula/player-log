@@ -63,6 +63,7 @@ namespace player_log.Controllers
         public ActionResult Create(CampaignDetailsVM model)
         // POST function to send the data from Create page to the Db
         {
+            // will need to add code for creating a default Location
             // check if there are any validation errors and return the same view if there are
             if (!ModelState.IsValid)
             {

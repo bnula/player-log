@@ -22,7 +22,7 @@ namespace player_log.Models
         public string Type { get; set; }
         public int Population { get; set; }
         public string Description { get; set; }
-        public IEnumerable<SelectListItem> Campaign { get; set; }
+        public IEnumerable<SelectListItem> Campaigns { get; set; }
         public int CampaignId { get; set; }
         public string LocationInventory { get; set; }
     }
