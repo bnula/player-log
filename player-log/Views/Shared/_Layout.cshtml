@@ -25,7 +25,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Campaigns" asp-action="Index">Campaigns</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Campaign" asp-action="Index">Campaigns</a>
                         </li>
                         <li class="btn-group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,10 +33,10 @@
                             </button>
                             <div class="dropdown-menu">
                                 @*add reference to the page using tag helpers - asp-controller="folder" and asp-action="page"*@
-                                <a class="dropdown-item" asp-controller="Characters" asp-action="Index"><i class="fa fa-id-card"></i> Characters</a>
-                                <a class="dropdown-item" asp-controller="Quests" asp-action="Index"><i class="fa fa-question-circle"></i> Quests</a>
-                                <a class="dropdown-item" asp-controller="Companions" asp-action="Index"><i class="fa fa-users"></i> NPCs</a>
-                                <a class="dropdown-item" href="#"><i class="fa fa-compass"></i> Locations</a>
+                                <a class="dropdown-item" asp-controller="Character" asp-action="Index"><i class="fa fa-id-card"></i> Characters</a>
+                                <a class="dropdown-item" asp-controller="Quest" asp-action="Index"><i class="fa fa-question-circle"></i> Quests</a>
+                                <a class="dropdown-item" asp-controller="Companion" asp-action="Index"><i class="fa fa-users"></i> NPCs</a>
+                                <a class="dropdown-item" asp-controller="Location" asp-action="Index"><i class="fa fa-compass"></i> Locations</a>
                             </div>
                         </li>
                     </ul>
