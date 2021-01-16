@@ -47,7 +47,7 @@ namespace player_log.Models
 
         [Range(1, 20)]
         public int Charisma { get; set; }
-        public IEnumerable<SelectListItem> Campaigns { get; set; }
+        public Campaign Campaign { get; set; }
         public int CampaignId { get; set; }
     }
 

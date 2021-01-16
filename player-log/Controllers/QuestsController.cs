@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using player_log.Contracts;
 using player_log.Data;
 using player_log.Models;
@@ -13,20 +14,23 @@ namespace player_log.Controllers
 {
     public class QuestsController : Controller
     {
-        private readonly IQuestRepository _repo;
+        private readonly IQuestRepository _questRepo;
+        private readonly ICampaignRepository _campRepo;
         private readonly IMapper _mapper;
         public QuestsController(
-            IQuestRepository repo,
+            IQuestRepository questRepo,
+            ICampaignRepository campRepo,
             IMapper mapper)
         {
-            _repo = repo;
+            _questRepo = questRepo;
+            _campRepo = campRepo;
             _mapper = mapper;
         }
         // GET: QuestsController
         public ActionResult Index()
         {
             // retrieve all the data from the db
-            var items = _repo.FindAll().ToList();
+            var items = _questRepo.FindAll().ToList();
             // map the data to view model
             var model = _mapper.Map<List<QuestListVM>>(items);
             // return the view with the data
@@ -37,12 +41,12 @@ namespace player_log.Controllers
         public ActionResult Details(int id)
         {
             // check whether the record with the given id exists
-            if (!_repo.RecordExists(id))
+            if (!_questRepo.RecordExists(id))
             {
                 return NotFound();
             }
             // find the record with the given id
-            var item = _repo.FindById(id);
+            var item = _questRepo.FindById(id);
             // convert the item to the data model
             var model = _mapper.Map<QuestDetailsVM>(item);
             // return the view with the data
@@ -52,7 +56,20 @@ namespace player_log.Controllers
         // GET: QuestsController/Create
         public ActionResult Create()
         {
-            return View();
+            // retrieve all campaigns from the db
+            var campaigns = _campRepo.FindAll().ToList();
+            // create a list using id and name
+            var campList = campaigns.Select(q => new SelectListItem
+            {
+                Text = q.Name,
+                Value = q.Id.ToString()
+            });
+            // initialize the view model with campaign list as campaigns attribute
+            var model = new QuestDetailsVM
+            {
+                Campaigns = campList
+            };
+            return View(model);
         }
 
         // POST: QuestsController/Create
@@ -68,7 +85,7 @@ namespace player_log.Controllers
             // convert the view model to data model
             var item = _mapper.Map<Quest>(model);
             // check whether the operation was successful
-            var isSuccess = _repo.Create(item);
+            var isSuccess = _questRepo.Create(item);
 
             if (!isSuccess)
             {
@@ -82,15 +99,25 @@ namespace player_log.Controllers
         // GET: QuestsController/Edit/5
         public ActionResult Edit(int id)
         {
+            // retrieve all campaigns from the db
+            var campaigns = _campRepo.FindAll().ToList();
+            // create a list using id and name
+            var campList = campaigns.Select(q => new SelectListItem
+            {
+                Text = q.Name,
+                Value = q.Id.ToString()
+            });
             // check if the item with a given id exists
-            if (!_repo.RecordExists(id))
+            if (!_questRepo.RecordExists(id))
             {
                 return NotFound();
             }
             // retrieve the item with the given id
-            var item = _repo.FindById(id);
+            var item = _questRepo.FindById(id);
             // map the item to the view model
             var model = _mapper.Map<QuestDetailsVM>(item);
+            // add the campaigns list to the model
+            model.Campaigns = campList;
             // return the view with the model
             return View(model);
         }
@@ -108,7 +135,7 @@ namespace player_log.Controllers
             // convert the view model to a data model
             var item = _mapper.Map<Quest>(model);
             // update the item in the db and check if the operation was a success
-            var isSuccess = _repo.Update(item);
+            var isSuccess = _questRepo.Update(item);
 
             if (!isSuccess)
             {
@@ -124,14 +151,14 @@ namespace player_log.Controllers
         public ActionResult Delete(int id)
         {
             // check if the item with a given id exists
-            if (!_repo.RecordExists(id))
+            if (!_questRepo.RecordExists(id))
             {
                 return NotFound();
             }
             // find the item using the given id
-            var item = _repo.FindById(id);
+            var item = _questRepo.FindById(id);
             // delete the item and check if the operation was successful
-            var isSuccess = _repo.Delete(item);
+            var isSuccess = _questRepo.Delete(item);
 
             if (!isSuccess)
             {

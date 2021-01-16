@@ -1,4 +1,5 @@
-﻿using player_log.Data;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using player_log.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,17 @@ namespace player_log.Models
     }
 
     public class QuestDetailsVM
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string MainObjective { get; set; }
+        public string Description { get; set; }
+        public string Notes { get; set; }
+        public string Reward { get; set; }
+        public IEnumerable<SelectListItem> Campaigns { get; set; }
+        public int CampaignId { get; set; }
+    }
+    public class QuestViewDetailsVM
     {
         public int Id { get; set; }
         public string Name { get; set; }
