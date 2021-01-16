@@ -48,8 +48,12 @@ namespace player_log.Controllers
             }
             // retrieve the item from the db based on id
             var item = _npcRepo.FindById(id);
+            // retrieve the campaign
+            var camp = _campRepo.FindById(item.CampaignId);
             // map the item to the ViewModel
             var model = _mapper.Map<CompanionViewDetailsVM>(item);
+            // add the campaign to the model
+            model.Campaign = camp;
             // return the view with the model data
             return View(model);
         }

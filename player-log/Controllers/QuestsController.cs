@@ -47,8 +47,12 @@ namespace player_log.Controllers
             }
             // find the record with the given id
             var item = _questRepo.FindById(id);
+            // retrieve the campaign
+            var camp = _campRepo.FindById(item.CampaignId);
             // convert the item to the data model
             var model = _mapper.Map<QuestViewDetailsVM>(item);
+            // add the campaign to the model
+            model.Campaign = camp;
             // return the view with the data
             return View(model);
         }

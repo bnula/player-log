@@ -44,8 +44,12 @@ namespace player_log.Controllers
         {
             // retrieve the item from the db based oin id
             var item = _charRepo.FindById(id);
+            // retrieve the campaign
+            var camp = _campRepo.FindById(item.CampaignId);
             // map the item to the view model
             var model = _mapper.Map<CharacterViewDetailsVM>(item);
+            // add campaign to the model
+            model.Campaign = camp;
             // return view with the model data
             return View(model);
         }
