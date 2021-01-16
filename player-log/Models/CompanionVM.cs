@@ -1,4 +1,5 @@
-﻿using System;
+﻿using player_log.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace player_log.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
-        public string Campaign { get; set; }
+        public Campaign Campaign { get; set; }
+        public int CampaignId { get; set; }
     }
 
     public class CompanionDetailsVM
@@ -23,6 +25,7 @@ namespace player_log.Models
         public string CompanionClass { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
-        public string Campaign { get; set; }
+        public Campaign Campaign { get; set; }
+        public int CampaignId { get; set; }
     }
 }

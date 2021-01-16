@@ -15,14 +15,10 @@ namespace player_log.Data
         public int Cr { get; set; }
         public string CompanionClass { get; set; }
         public string Description { get; set; }
-        
-        [ForeignKey("LocationId")]
-        public string Location { get; set; }
-        public int? LocationId { get; set; }
 
         [ForeignKey("CampaignId")]
-        public string Campaign { get; set; }
-        public int? CampaignId { get; set; }
+        public Campaign Campaign { get; set; }
+        public int CampaignId { get; set; }
 
     }
 }

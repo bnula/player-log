@@ -17,8 +17,8 @@ namespace player_log.Data
         public string Notes { get; set; }
         public string Reward { get; set; }
 
-        [ForeignKey("CamapignId")]
-        public string Campaign { get; set; }
-        public int? CampaignId { get; set; }
+        [ForeignKey("CampaignId")]
+        public Campaign Campaign { get; set; }
+        public int CampaignId { get; set; }
     }
 }
