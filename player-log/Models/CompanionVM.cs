@@ -12,7 +12,6 @@ namespace player_log.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Location { get; set; }
         public Campaign Campaign { get; set; }
         public int CampaignId { get; set; }
     }
@@ -25,7 +24,6 @@ namespace player_log.Models
         public int Cr { get; set; }
         public string CompanionClass { get; set; }
         public string Description { get; set; }
-        public string Location { get; set; }
         public IEnumerable<SelectListItem> Campaigns { get; set; }
         public int CampaignId { get; set; }
     }
@@ -38,7 +36,6 @@ namespace player_log.Models
         public int Cr { get; set; }
         public string CompanionClass { get; set; }
         public string Description { get; set; }
-        public string Location { get; set; }
         public Campaign Campaign { get; set; }
         public int CampaignId { get; set; }
     }
