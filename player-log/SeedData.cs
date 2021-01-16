@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using player_log.Contracts;
+using player_log.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,36 @@ namespace player_log
         {
             SeedRoles(roleManager);
             SeedUsers(userManager);
+        }
+
+        public static void SeedLocations(ILocationRepository repo)
+        {
+            // check if there are any created Locations
+            if (repo.FindAll().Count == 0)
+            {
+                // if there aren't create one with name Other linked to Campaign with Id 1
+                var defaultLoc = new Location
+                {
+                    CampaignId = 1,
+                    Name = "Other"
+                };
+                repo.Create(defaultLoc);
+            }
+        }
+
+        public static void SeedCampaign(ICampaignRepository repo)
+        {
+            // check if there are any created Campaigns in the db
+            if (repo.FindAll().Count == 0)
+            {
+                // if there aren't create one with name Other and Id 1
+                var defaultCamp = new Campaign
+                {
+                    Id = 1,
+                    Name = "Other"
+                };
+                repo.Create(defaultCamp);
+            }
         }
 
         private static void SeedUsers(UserManager<IdentityUser> userManager)
