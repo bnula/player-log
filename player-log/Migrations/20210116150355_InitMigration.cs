@@ -47,35 +47,6 @@ namespace player_log.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CampaignDetailsVM",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Notes = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CampaignDetailsVM", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CampaignListVM",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CampaignListVM", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Campaigns",
                 columns: table => new
                 {
@@ -197,61 +168,6 @@ namespace player_log.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CharacterDetailsVM",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Race = table.Column<string>(nullable: true),
-                    MainClass = table.Column<string>(nullable: true),
-                    Multiclass = table.Column<bool>(nullable: false),
-                    SecondClass = table.Column<string>(nullable: true),
-                    ThirdClass = table.Column<string>(nullable: true),
-                    Level = table.Column<int>(nullable: false),
-                    Strength = table.Column<int>(nullable: false),
-                    Dexterity = table.Column<int>(nullable: false),
-                    Constitution = table.Column<int>(nullable: false),
-                    Wisdom = table.Column<int>(nullable: false),
-                    Intelligence = table.Column<int>(nullable: false),
-                    Charisma = table.Column<int>(nullable: false),
-                    CampaignId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CharacterDetailsVM", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CharacterDetailsVM_Campaigns_CampaignId",
-                        column: x => x.CampaignId,
-                        principalTable: "Campaigns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CharacterListVM",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Race = table.Column<string>(nullable: true),
-                    MainClass = table.Column<string>(nullable: true),
-                    Multiclass = table.Column<bool>(nullable: false),
-                    CampaignId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CharacterListVM", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CharacterListVM_Campaigns_CampaignId",
-                        column: x => x.CampaignId,
-                        principalTable: "Campaigns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Characters",
                 columns: table => new
                 {
@@ -277,51 +193,6 @@ namespace player_log.Migrations
                     table.PrimaryKey("PK_Characters", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Characters_Campaigns_CampaignId",
-                        column: x => x.CampaignId,
-                        principalTable: "Campaigns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CompanionDetailsVM",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: false),
-                    Cr = table.Column<int>(nullable: false),
-                    CompanionClass = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Location = table.Column<string>(nullable: true),
-                    CampaignId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CompanionDetailsVM", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CompanionDetailsVM_Campaigns_CampaignId",
-                        column: x => x.CampaignId,
-                        principalTable: "Campaigns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CompanionListVM",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Location = table.Column<string>(nullable: true),
-                    CampaignId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CompanionListVM", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CompanionListVM_Campaigns_CampaignId",
                         column: x => x.CampaignId,
                         principalTable: "Campaigns",
                         principalColumn: "Id",
@@ -376,27 +247,6 @@ namespace player_log.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "QuestListVM",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    CampaignId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QuestListVM", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_QuestListVM_Campaigns_CampaignId",
-                        column: x => x.CampaignId,
-                        principalTable: "Campaigns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Quests",
                 columns: table => new
                 {
@@ -414,30 +264,6 @@ namespace player_log.Migrations
                     table.PrimaryKey("PK_Quests", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Quests_Campaigns_CampaignId",
-                        column: x => x.CampaignId,
-                        principalTable: "Campaigns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QuestViewDetailsVM",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    MainObjective = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Notes = table.Column<string>(nullable: true),
-                    Reward = table.Column<string>(nullable: true),
-                    CampaignId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QuestViewDetailsVM", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_QuestViewDetailsVM_Campaigns_CampaignId",
                         column: x => x.CampaignId,
                         principalTable: "Campaigns",
                         principalColumn: "Id",
@@ -484,28 +310,8 @@ namespace player_log.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CharacterDetailsVM_CampaignId",
-                table: "CharacterDetailsVM",
-                column: "CampaignId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CharacterListVM_CampaignId",
-                table: "CharacterListVM",
-                column: "CampaignId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Characters_CampaignId",
                 table: "Characters",
-                column: "CampaignId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CompanionDetailsVM_CampaignId",
-                table: "CompanionDetailsVM",
-                column: "CampaignId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CompanionListVM_CampaignId",
-                table: "CompanionListVM",
                 column: "CampaignId");
 
             migrationBuilder.CreateIndex(
@@ -519,18 +325,8 @@ namespace player_log.Migrations
                 column: "CampaignId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuestListVM_CampaignId",
-                table: "QuestListVM",
-                column: "CampaignId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Quests_CampaignId",
                 table: "Quests",
-                column: "CampaignId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QuestViewDetailsVM_CampaignId",
-                table: "QuestViewDetailsVM",
                 column: "CampaignId");
         }
 
@@ -552,25 +348,7 @@ namespace player_log.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CampaignDetailsVM");
-
-            migrationBuilder.DropTable(
-                name: "CampaignListVM");
-
-            migrationBuilder.DropTable(
-                name: "CharacterDetailsVM");
-
-            migrationBuilder.DropTable(
-                name: "CharacterListVM");
-
-            migrationBuilder.DropTable(
                 name: "Characters");
-
-            migrationBuilder.DropTable(
-                name: "CompanionDetailsVM");
-
-            migrationBuilder.DropTable(
-                name: "CompanionListVM");
 
             migrationBuilder.DropTable(
                 name: "Companions");
@@ -579,13 +357,7 @@ namespace player_log.Migrations
                 name: "Locations");
 
             migrationBuilder.DropTable(
-                name: "QuestListVM");
-
-            migrationBuilder.DropTable(
                 name: "Quests");
-
-            migrationBuilder.DropTable(
-                name: "QuestViewDetailsVM");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -19,14 +19,6 @@ namespace player_log.Data
         public DbSet<Companion> Companions { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Campaign> Campaigns { get; set; }
-        public DbSet<CharacterListVM> CharacterListVM { get; set; }
-        public DbSet<CampaignListVM> CampaignListVM { get; set; }
-        public DbSet<CampaignDetailsVM> CampaignDetailsVM { get; set; }
-        public DbSet<CompanionListVM> CompanionListVM { get; set; }
-        public DbSet<CompanionViewDetailsVM> CompanionViewDetailsVM { get; set; }
-        public DbSet<CharacterViewDetailsVM> CharacterViewDetailsVM { get; set; }
-        public DbSet<QuestViewDetailsVM> QuestViewDetailsVM { get; set; }
-        public DbSet<QuestListVM> QuestListVM { get; set; }
 
     }
 }
