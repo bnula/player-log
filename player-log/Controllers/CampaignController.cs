@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace player_log.Controllers
 {
-    public class CampaignsController : Controller
+    public class CampaignController : Controller
     {
         private readonly ICampaignRepository _repo;
         private readonly IMapper _mapper;
-        public CampaignsController(
+        public CampaignController(
             ICampaignRepository repo,
             IMapper mapper
             )

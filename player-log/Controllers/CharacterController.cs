@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace player_log.Controllers
 {
-    public class CharactersController : Controller
+    public class CharacterController : Controller
     {
         private readonly ICharacterRepository _charRepo;
         private readonly ICampaignRepository _campRepo;
         private readonly IMapper _mapper;
 
-        public CharactersController(
+        public CharacterController(
             ICharacterRepository charRepo,
             ICampaignRepository campRepo,
             IMapper mapper)

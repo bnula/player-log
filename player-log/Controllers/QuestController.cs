@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace player_log.Controllers
 {
-    public class QuestsController : Controller
+    public class QuestController : Controller
     {
         private readonly IQuestRepository _questRepo;
         private readonly ICampaignRepository _campRepo;
         private readonly IMapper _mapper;
-        public QuestsController(
+        public QuestController(
             IQuestRepository questRepo,
             ICampaignRepository campRepo,
             IMapper mapper)
