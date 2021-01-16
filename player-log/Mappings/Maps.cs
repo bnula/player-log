@@ -27,6 +27,10 @@ namespace player_log.Mappings
             CreateMap<Quest, QuestListVM>().ReverseMap();
             CreateMap<Quest, QuestDetailsVM>().ReverseMap();
             CreateMap<Quest, QuestViewDetailsVM>().ReverseMap();
+
+            CreateMap<Location, LocationListVM>().ReverseMap();
+            CreateMap<Location, LocationDetailsVM>().ReverseMap();
+            CreateMap<Location, LocationViewDetailsVM>().ReverseMap();
         }
     }
 }
