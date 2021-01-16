@@ -48,7 +48,7 @@ namespace player_log.Controllers
             // find the record with the given id
             var item = _questRepo.FindById(id);
             // convert the item to the data model
-            var model = _mapper.Map<QuestDetailsVM>(item);
+            var model = _mapper.Map<QuestViewDetailsVM>(item);
             // return the view with the data
             return View(model);
         }

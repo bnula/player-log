@@ -18,12 +18,15 @@ namespace player_log.Mappings
 
             CreateMap<Character, CharacterListVM>().ReverseMap();
             CreateMap<Character, CharacterDetailsVM>().ReverseMap();
+            CreateMap<Character, CharacterViewDetailsVM>().ReverseMap();
             
             CreateMap<Companion, CompanionListVM>().ReverseMap();
             CreateMap<Companion, CompanionDetailsVM>().ReverseMap();
+            CreateMap<Companion, CompanionViewDetailsVM>().ReverseMap();
 
             CreateMap<Quest, QuestListVM>().ReverseMap();
             CreateMap<Quest, QuestDetailsVM>().ReverseMap();
+            CreateMap<Quest, QuestViewDetailsVM>().ReverseMap();
         }
     }
 }

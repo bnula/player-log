@@ -47,6 +47,48 @@ namespace player_log.Models
 
         [Range(1, 20)]
         public int Charisma { get; set; }
+        public IEnumerable<SelectListItem> Campaigns { get; set; }
+        public int CampaignId { get; set; }
+    }
+
+    public class CharacterViewDetailsVM
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Race { get; set; }
+
+        [DisplayName("Class")]
+        public string MainClass { get; set; }
+
+        [DisplayName("Multiclass?")]
+        public bool Multiclass { get; set; }
+
+        [DisplayName("Second Class")]
+        public string SecondClass { get; set; }
+
+        [DisplayName("Third Class")]
+        public string ThirdClass { get; set; }
+
+        [DisplayName("Total Level")]
+        public int Level { get; set; }
+
+        [Range(1, 20)]
+        public int Strength { get; set; }
+
+        [Range(1, 20)]
+        public int Dexterity { get; set; }
+
+        [Range(1, 20)]
+        public int Constitution { get; set; }
+
+        [Range(1, 20)]
+        public int Wisdom { get; set; }
+
+        [Range(1, 20)]
+        public int Intelligence { get; set; }
+
+        [Range(1, 20)]
+        public int Charisma { get; set; }
         public Campaign Campaign { get; set; }
         public int CampaignId { get; set; }
     }

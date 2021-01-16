@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using player_log.Contracts;
 using player_log.Data;
 using player_log.Models;
@@ -13,14 +14,17 @@ namespace player_log.Controllers
 {
     public class CharactersController : Controller
     {
-        private readonly ICharacterRepository _repo;
+        private readonly ICharacterRepository _charRepo;
+        private readonly ICampaignRepository _campRepo;
         private readonly IMapper _mapper;
 
         public CharactersController(
-            ICharacterRepository repo,
+            ICharacterRepository charRepo,
+            ICampaignRepository campRepo,
             IMapper mapper)
         {
-            _repo = repo;
+            _charRepo = charRepo;
+            _campRepo = campRepo;
             _mapper = mapper;
         }
 
@@ -28,7 +32,7 @@ namespace player_log.Controllers
         public ActionResult Index()
         {
             // call the functions to retrieve all the records from the Db
-            var characters = _repo.FindAll().ToList();
+            var characters = _charRepo.FindAll().ToList();
             // map the list of items to the ViewModel
             var model = _mapper.Map<List<Character>, List<CharacterListVM>>(characters);
             // return the View using the mapped items
@@ -39,9 +43,9 @@ namespace player_log.Controllers
         public ActionResult Details(int id)
         {
             // retrieve the item from the db based oin id
-            var item = _repo.FindById(id);
+            var item = _charRepo.FindById(id);
             // map the item to the view model
-            var model = _mapper.Map<CharacterDetailsVM>(item);
+            var model = _mapper.Map<CharacterViewDetailsVM>(item);
             // return view with the model data
             return View(model);
         }
@@ -49,7 +53,20 @@ namespace player_log.Controllers
         // GET: CharactersController/Create
         public ActionResult Create()
         {
-            return View();
+            // retrieve all campaigns
+            var campaigns = _campRepo.FindAll().ToList();
+            // create list of campaigns
+            var campList = campaigns.Select(q => new SelectListItem
+            {
+                Text = q.Name,
+                Value = q.Id.ToString()
+            });
+            // create new model using the campaign list
+            var model = new CharacterDetailsVM
+            {
+                Campaigns = campList
+            };
+            return View(model);
         }
 
         // POST: CharactersController/Create
@@ -66,7 +83,7 @@ namespace player_log.Controllers
             // map the viewmodel to datamodel
             var item = _mapper.Map<Character>(model);
             // check if the operation was successful
-            var isSuccess = _repo.Create(item);
+            var isSuccess = _charRepo.Create(item);
 
             if (!isSuccess)
             {
@@ -80,15 +97,25 @@ namespace player_log.Controllers
         // GET: CharactersController/Edit/5
         public ActionResult Edit(int id)
         {
+            // retrieve all campaigns
+            var campaigns = _campRepo.FindAll().ToList();
+            // create list of campaigns
+            var campList = campaigns.Select(q => new SelectListItem
+            {
+                Text = q.Name,
+                Value = q.Id.ToString()
+            });
             // check if the item with the given id exists
-            if (!_repo.RecordExists(id))
+            if (!_charRepo.RecordExists(id))
             {
                 return NotFound();
             }
             // retrieve the item from the db based on id
-            var item = _repo.FindById(id);
+            var item = _charRepo.FindById(id);
             // map the data to a view model
             var model = _mapper.Map<CharacterDetailsVM>(item);
+            // add the campaign list to the model
+            model.Campaigns = campList;
             // return the view with the model data
             return View(model);
         }
@@ -107,7 +134,7 @@ namespace player_log.Controllers
             // map the item to data model
             var item = _mapper.Map<Character>(model);
             // check if the operation was successful
-            var isSuccess = _repo.Update(item);
+            var isSuccess = _charRepo.Update(item);
 
             if (!isSuccess)
             {
@@ -122,14 +149,14 @@ namespace player_log.Controllers
         public ActionResult Delete(int id)
         {
             // check if the item with given id exists
-            if (!_repo.RecordExists(id))
+            if (!_charRepo.RecordExists(id))
             {
                 return NotFound();
             }
             // find the item with the given id
-            var item = _repo.FindById(id);
+            var item = _charRepo.FindById(id);
             // remove the item
-            var isSuccess = _repo.Delete(item);
+            var isSuccess = _charRepo.Delete(item);
             // check whether the operation was successful
             if (!isSuccess)
             {

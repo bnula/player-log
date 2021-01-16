@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using player_log.Contracts;
 using player_log.Data;
 using player_log.Models;
@@ -13,21 +14,24 @@ namespace player_log.Controllers
 {
     public class CompanionsController : Controller
     {
-        private readonly ICompanionRepository _repo;
+        private readonly ICompanionRepository _npcRepo;
+        private readonly ICampaignRepository _campRepo;
         private readonly IMapper _mapper;
 
         public CompanionsController(
-            ICompanionRepository repo,
+            ICompanionRepository npcRepo,
+            ICampaignRepository campRepo,
             IMapper mapper)
         {
-            _repo = repo;
+            _npcRepo = npcRepo;
+            _campRepo = campRepo;
             _mapper = mapper;
         }
         // GET: CompanionController
         public ActionResult Index()
         {
             // load all of the records in the Db table
-            var items = _repo.FindAll();
+            var items = _npcRepo.FindAll();
             // map the records to a ViewModel
             var model = _mapper.Map<List<CompanionListVM>>(items);
             // return the view with the data
@@ -38,14 +42,14 @@ namespace player_log.Controllers
         public ActionResult Details(int id)
         {
             // check wheter record with the given id exists
-            if (!_repo.RecordExists(id))
+            if (!_npcRepo.RecordExists(id))
             {
                 return NotFound();
             }
             // retrieve the item from the db based on id
-            var item = _repo.FindById(id);
+            var item = _npcRepo.FindById(id);
             // map the item to the ViewModel
-            var model = _mapper.Map<CompanionDetailsVM>(item);
+            var model = _mapper.Map<CompanionViewDetailsVM>(item);
             // return the view with the model data
             return View(model);
         }
@@ -53,7 +57,20 @@ namespace player_log.Controllers
         // GET: CompanionController/Create
         public ActionResult Create()
         {
-            return View();
+            // retrieve all campaigns
+            var campaigns = _campRepo.FindAll().ToList();
+            // create list of campaigns
+            var campList = campaigns.Select(q => new SelectListItem
+            {
+                Text = q.Name,
+                Value = q.Id.ToString()
+            });
+            // create view model with the campaigns lsit
+            var model = new CompanionDetailsVM
+            {
+                Campaigns = campList
+            };
+            return View(model);
         }
 
         // POST: CompanionController/Create
@@ -70,7 +87,7 @@ namespace player_log.Controllers
             // convert the data into the DataModel
             var item = _mapper.Map<Companion>(model);
             // check whether the operation was successful
-            var isSuccess = _repo.Create(item);
+            var isSuccess = _npcRepo.Create(item);
 
             if (!isSuccess)
             {
@@ -84,15 +101,25 @@ namespace player_log.Controllers
         // GET: CompanionController/Edit/5
         public ActionResult Edit(int id)
         {
+            // retrieve all campaigns
+            var campaigns = _campRepo.FindAll().ToList();
+            // create list of campaigns
+            var campList = campaigns.Select(q => new SelectListItem
+            {
+                Text = q.Name,
+                Value = q.Id.ToString()
+            });
             // check if the record with the given id exists
-            if (!_repo.RecordExists(id))
+            if (!_npcRepo.RecordExists(id))
             {
                 return NotFound();
             }
             // retrieve the item from the db based on id
-            var item = _repo.FindById(id);
+            var item = _npcRepo.FindById(id);
             // map the item to the ViewModel
             var model = _mapper.Map<CompanionDetailsVM>(item);
+            // add the campaign list to the model
+            model.Campaigns = campList;
             // return the view with the data
             return View(model);
         }
@@ -110,7 +137,7 @@ namespace player_log.Controllers
             // map the item to the DataModel
             var item = _mapper.Map<Companion>(model);
             // check if the operation was successful
-            var isSuccess = _repo.Update(item);
+            var isSuccess = _npcRepo.Update(item);
 
             if (!isSuccess)
             {
@@ -125,14 +152,14 @@ namespace player_log.Controllers
         public ActionResult Delete(int id)
         {
             // check whether the record with the given id exists
-            if (!_repo.RecordExists(id))
+            if (!_npcRepo.RecordExists(id))
             {
                 return NotFound();
             }
             // find the item based on the id
-            var item = _repo.FindById(id);
+            var item = _npcRepo.FindById(id);
             // check whether the operation was successful
-            var isSuccess = _repo.Delete(item);
+            var isSuccess = _npcRepo.Delete(item);
 
             if (!isSuccess)
             {
