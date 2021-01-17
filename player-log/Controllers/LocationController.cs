@@ -33,7 +33,7 @@ namespace player_log.Controllers
             // retrieve all items from db
             var items = _locRepo.FindAll().ToList();
             // convert them to the view model
-            var model = _mapper.Map<LocationListVM>(items);
+            var model = _mapper.Map<List<LocationListVM>>(items);
             // return the view with the data
             return View(model);
         }
