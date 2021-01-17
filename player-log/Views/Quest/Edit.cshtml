@@ -1,12 +1,10 @@
 ﻿@model player_log.Models.QuestDetailsVM
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Quest";
 }
 
-<h1>Edit</h1>
-
-<h4>QuestDetailsVM</h4>
+<h1>Edit Quest</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -44,14 +42,11 @@
                 <span asp-validation-for="CampaignId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Save</button>
+                <a class="btn btn-secondary" asp-action="Index"><i class="fa fa-ban"></i> Back to List</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
