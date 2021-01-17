@@ -34,6 +34,11 @@ namespace player_log.Controllers
             var items = _locRepo.FindAll().ToList();
             // convert them to the view model
             var model = _mapper.Map<List<LocationListVM>>(items);
+            // assign Campaign item for each Location based on CampaignId
+            foreach (var item in model)
+            {
+                item.Campaign = _campRepo.FindById(item.CampaignId);
+            };
             // return the view with the data
             return View(model);
         }

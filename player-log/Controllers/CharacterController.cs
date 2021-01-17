@@ -35,6 +35,11 @@ namespace player_log.Controllers
             var characters = _charRepo.FindAll().ToList();
             // map the list of items to the ViewModel
             var model = _mapper.Map<List<Character>, List<CharacterListVM>>(characters);
+            // add the campaign to each item based on CampaignId
+            foreach (var item in model)
+            {
+                item.Campaign = _campRepo.FindById(item.CampaignId);
+            };
             // return the View using the mapped items
             return View(model);
         }

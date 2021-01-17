@@ -34,6 +34,11 @@ namespace player_log.Controllers
             var items = _npcRepo.FindAll();
             // map the records to a ViewModel
             var model = _mapper.Map<List<CompanionListVM>>(items);
+            // add the campaign to each item based on CampaignId
+            foreach (var item in model)
+            {
+                item.Campaign = _campRepo.FindById(item.CampaignId);
+            };
             // return the view with the data
             return View(model);
         }

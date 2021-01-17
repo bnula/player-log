@@ -33,6 +33,11 @@ namespace player_log.Controllers
             var items = _questRepo.FindAll().ToList();
             // map the data to view model
             var model = _mapper.Map<List<QuestListVM>>(items);
+            // add the campaign to each item based on CampaignId
+            foreach (var item in model)
+            {
+                item.Campaign = _campRepo.FindById(item.CampaignId);
+            };
             // return the view with the data
             return View(model);
         }

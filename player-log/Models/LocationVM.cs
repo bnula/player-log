@@ -13,6 +13,7 @@ namespace player_log.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public Campaign Campaign { get; set; }
+        public int CampaignId { get; set; }
     }
 
     public class LocationDetailsVM

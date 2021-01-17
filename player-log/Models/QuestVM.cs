@@ -11,7 +11,7 @@ namespace player_log.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string MainObjective { get; set; }
         public Campaign Campaign { get; set; }
         public int CampaignId { get; set; }
     }
