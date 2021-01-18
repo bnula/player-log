@@ -1,0 +1,2 @@
+﻿1. rework the functions to async
+2. rework the data models, use 1 mapping table
