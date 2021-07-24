@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Campaigns";
+}
+@model IEnumerable<CampaignVM>
+
+@if (Model.Count() == 0)
+{
+    <h2>No active campaigns</h2>
+}
+else
+{
+    @foreach (var c in Model)
+    {
+        <div class="card bg-light p-1 m-1 col-md-3 text-center d-inline-block item-card">
+            <h2>
+                <a
+                   class="nav-link item-link"
+                   asp-area=""
+                   asp-controller="Campaigns"
+                   asp-action="Details"
+                   asp-route-id="@c.CampaignId" >
+                   @c.CampaignName
+                </a>
+            </h2>
+        </div>
+    }
+}

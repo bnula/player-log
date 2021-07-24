@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PlayerLogMvc.Campaign;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,5 +13,7 @@ namespace PlayerLogMvc.Data
             : base(options)
         {
         }
+
+        public DbSet<Campaign.Campaign> Campaigns { get; set; }
     }
 }
