@@ -23,42 +23,68 @@ namespace PlayerLogMvc.Campaign
         // GET: CampaignsController
         public async Task<IActionResult> Index()
         {
-            var items = await _repo.FindAllAsync();
-
-            var model = items.Select(i => new CampaignVM
+            var actionName = "Campaigns - Index:";
+            try
             {
-                CampaignId = i.CampaignId,
-                CampaignName = i.CampaignName
-            });
+                _logger.LogInformation($"{actionName} Called");
+                var items = await _repo.FindAllAsync();
 
-            return View(model);
+                var model = items.Select(i => new CampaignVM
+                {
+                    CampaignId = i.CampaignId,
+                    CampaignName = i.CampaignName
+                });
+
+                _logger.LogInformation($"{actionName} Success");
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{actionName} Failed - {ex}");
+                return null;
+            }
+            
 
         }
 
         // GET: CampaignsController/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            if (id < 1)
+            var actionName = "Campaigns - Details:";
+            try
             {
-                return BadRequest();
-            }
-            var item = await _repo.FindByIdAsync(id);
-            if (item is null)
-            {
-                return NotFound();
-            }
-            var model = new CampaignVM
-            {
-                CampaignId = item.CampaignId,
-                CampaignName = item.CampaignName
-            };
+                _logger.LogInformation($"{actionName} Called");
+                if (id < 1)
+                {
+                    _logger.LogWarning($"{actionName} Invalid Id - {id}");
+                    return RedirectToPage("/BadRequest");
+                }
+                var item = await _repo.FindByIdAsync(id);
+                if (item is null)
+                {
+                    _logger.LogWarning($"{actionName} Item not found - Id: {id}");
+                    return RedirectToPage("/NotFound");
+                }
+                var model = new CampaignVM
+                {
+                    CampaignId = item.CampaignId,
+                    CampaignName = item.CampaignName
+                };
 
-            return View(model);
+                _logger.LogInformation($"{actionName} Success");
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{actionName} Failed - {ex}");
+                return null;
+            }
         }
 
         // GET: CampaignsController/Create
         public ActionResult Create()
         {
+            var actionName = GetControllerActionNames();
             return View();
         }
 
@@ -67,6 +93,7 @@ namespace PlayerLogMvc.Campaign
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
         {
+            var actionName = "Campaigns - Create(Post):";
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -80,6 +107,7 @@ namespace PlayerLogMvc.Campaign
         // GET: CampaignsController/Edit/5
         public ActionResult Edit(int id)
         {
+            var actionName = "Campaigns - Edit:";
             return View();
         }
 
@@ -88,6 +116,7 @@ namespace PlayerLogMvc.Campaign
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
+            var actionName = "Campaigns - Edit(Post):";
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -101,6 +130,7 @@ namespace PlayerLogMvc.Campaign
         // GET: CampaignsController/Delete/5
         public ActionResult Delete(int id)
         {
+            var actionName = "Campaigns - Delete:";
             return View();
         }
 
@@ -109,6 +139,7 @@ namespace PlayerLogMvc.Campaign
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
+            var actionName = "Campaigns - Delete(Post):";
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -117,6 +148,14 @@ namespace PlayerLogMvc.Campaign
             {
                 return View();
             }
+        }
+
+        // Will need to figure out how to mock Controller and Action names in Unit tests
+        private string GetControllerActionNames()
+        {
+            var controller = ControllerContext.ActionDescriptor.ControllerName;
+            var action = ControllerContext.ActionDescriptor.ActionName;
+            return $"{controller} - {action}:";
         }
     }
 }
