@@ -26,7 +26,7 @@ namespace PlayerLogMvcUnitTests
         }
 
         [Fact]
-        public async Task Index_ReturnsAViewResult_WithAListOfCampaigns()
+        public async Task ReturnsAViewResult_WithAListOfCampaigns()
         {
             // Arrange
             _mockRepo.Setup(repo => repo.FindAllAsync())
@@ -42,7 +42,7 @@ namespace PlayerLogMvcUnitTests
         }
 
         [Fact]
-        public async Task Index_NoExistingCampaigns_ReturnEmptyList()
+        public async Task NoExistingCampaigns_ReturnEmptyList()
         {
             // Arrange
             _mockRepo.Setup(repo => repo.FindAllAsync())

@@ -1,0 +1,28 @@
+﻿@model CampaignVM
+@{
+    ViewBag.Title = "Create new Campaign";
+}
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
+}
+
+<h1>@ViewBag.Title</h1>
+
+<div class="col-md-6">
+    <form method="post" class="card card-body">
+        <div class="card-group">
+            <label asp-for="CampaignName">Campaign Name</label>
+            <input asp-for="CampaignName" placeholder="Enter A Campaign Name" class="form-control" />
+            <span asp-validation-for="CampaignName" class="text-danger"></span>
+        </div>
+        <div class="btn-group">
+            <button type="submit" class="btn btn-success m-2 rounded">
+                <i class="fas fa-check"></i> Create
+            </button>
+            <a asp-controller="Campaigns" asp-action="Index" type="submit" class="btn btn-secondary m-2 rounded">
+                <i class="fas fa-arrow-alt-circle-left"></i> Back to List
+            </a>
+        </div>
+    </form>
+</div>

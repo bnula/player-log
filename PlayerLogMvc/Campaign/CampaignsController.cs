@@ -77,30 +77,62 @@ namespace PlayerLogMvc.Campaign
             catch (Exception ex)
             {
                 _logger.LogError($"{actionName} Failed - {ex}");
-                return null;
+                return RedirectToPage("/InternalServerError");
             }
         }
 
         // GET: CampaignsController/Create
         public ActionResult Create()
         {
-            var actionName = GetControllerActionNames();
-            return View();
+            var actionName = "Campaigns - Create:";
+            _logger.LogInformation($"{actionName} Called");
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{actionName} Failed - {ex}");
+                return RedirectToPage("/InternalServerError");
+            }
         }
 
         // POST: CampaignsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(CampaignVM model)
         {
             var actionName = "Campaigns - Create(Post):";
+            _logger.LogInformation($"{actionName} Called");
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    ModelState.AddModelError("x", "Please fix validation errors");
+                    return View(model);
+                }
+
+                var item = new Campaign
+                {
+                    CampaignName = model.CampaignName
+                };
+
+                var success = await _repo.CreateAsync(item);
+
+                if (!success)
+                {
+                    ModelState.AddModelError("x", "Creation failed");
+                    _logger.LogWarning("Creation failed");
+                    return View(model);
+                }
+
+                _logger.LogInformation($"{actionName} Success");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                _logger.LogError($"{actionName} Failed - {ex}");
+                return RedirectToPage("/InternalServerError");
             }
         }
 

@@ -25,7 +25,7 @@ namespace PlayerLogMvcUnitTests.Campaigns
         }
 
         [Fact]
-        public async Task Details_ValidId_ReturnViewWithViewModel()
+        public async Task ValidId_ReturnViewWithViewModel()
         {
             // Arrange
             var camp = new Campaign
@@ -48,7 +48,7 @@ namespace PlayerLogMvcUnitTests.Campaigns
         }
 
         [Fact]
-        public async Task Details_InvalidId_ReturnBadRequest()
+        public async Task InvalidId_ReturnBadRequest()
         {
             // Arrange
 
@@ -62,7 +62,7 @@ namespace PlayerLogMvcUnitTests.Campaigns
         }
 
         [Fact]
-        public async Task Details_NonExistentId_ReturnNotFound()
+        public async Task NonExistentId_ReturnNotFound()
         {
             // Arrange
             Campaign camp = null;
