@@ -137,24 +137,84 @@ namespace PlayerLogMvc.Campaign
         }
 
         // GET: CampaignsController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             var actionName = "Campaigns - Edit:";
-            return View();
+            try
+            {
+                _logger.LogInformation($"{actionName} Called");
+                if (id < 1)
+                {
+                    _logger.LogWarning($"{actionName} Invalid Id - {id}");
+                    return RedirectToPage("/BadRequest");
+                }
+
+                var item = await _repo.FindByIdAsync(id);
+
+                if (item is null)
+                {
+                    _logger.LogWarning($"{actionName} Item not Found - Id: {id}");
+                    return RedirectToPage("/NotFound");
+                }
+
+                var model = new CampaignVM
+                {
+                    CampaignId = item.CampaignId,
+                    CampaignName = item.CampaignName
+                };
+
+                _logger.LogInformation($"{actionName} Success");
+                return View("Edit", model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{actionName} Failed - Ex");
+                return RedirectToPage("/InternalServerError");
+            }
         }
 
         // POST: CampaignsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(CampaignVM model)
         {
             var actionName = "Campaigns - Edit(Post):";
             try
             {
+                _logger.LogInformation($"{actionName} Called");
+
+                if (!ModelState.IsValid)
+                {
+                    ModelState.AddModelError("x", "Please fix validation errors");
+                    return View(model);
+                }
+
+                if (model is null)
+                {
+                    _logger.LogWarning($"{actionName} Empty model");
+                    return RedirectToPage("/BadRequest");
+                }
+
+                var item = new Campaign
+                {
+                    CampaignId = model.CampaignId,
+                    CampaignName = model.CampaignName
+                };
+
+                var success = await _repo.UpdateAsync(item);
+
+                if (!success)
+                {
+                    ModelState.AddModelError("x", "Something went wrong, try again.");
+                    return View(model);
+                }
+
+                _logger.LogInformation($"{actionName} Success");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogError($"{actionName} Failed - {ex}");
                 return View();
             }
         }

@@ -69,6 +69,7 @@ namespace PlayerLogMvcUnitTests.Campaigns
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsType<CampaignVM>(viewResult.Model);
+            Assert.False(viewResult.ViewData.ModelState.IsValid);
             Assert.Equal(newCamp.CampaignName, model.CampaignName);
         }
 
