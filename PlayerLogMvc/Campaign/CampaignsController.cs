@@ -219,26 +219,42 @@ namespace PlayerLogMvc.Campaign
             }
         }
 
-        // GET: CampaignsController/Delete/5
-        public ActionResult Delete(int id)
+        // POST: CampaignsController/Delete/5
+        public async Task<IActionResult> Delete(int id)
         {
             var actionName = "Campaigns - Delete:";
-            return View();
-        }
-
-        // POST: CampaignsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            var actionName = "Campaigns - Delete(Post):";
             try
             {
+                _logger.LogInformation($"{actionName} Called");
+                if (id < 1)
+                {
+                    _logger.LogWarning($"{actionName} Invalid Id - {id}");
+                    return RedirectToPage("/BadRequest");
+                }
+
+                var item = await _repo.FindByIdAsync(id);
+
+                if (item is null)
+                {
+                    _logger.LogWarning($"{actionName} Item Not Found - Id: {id}");
+                    return RedirectToPage("/NotFound");
+                }
+
+                var success = await _repo.DeleteAsync(item);
+
+                if (!success)
+                {
+                    _logger.LogError($"{actionName} Failed");
+                    return RedirectToPage("/InternalServerError");
+                }
+
+                _logger.LogInformation($"{actionName} Success");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                _logger.LogError($"{actionName} Failed - {ex}");
+                return RedirectToPage("/InternalServerError");
             }
         }
 
