@@ -53,7 +53,7 @@ namespace PlayerLogMvc.Campaign
             var actionName = "Campaigns - Details:";
             try
             {
-                _logger.LogInformation($"{actionName} Called");
+                _logger.LogInformation($"{actionName} Called - Id: {id}");
                 if (id < 1)
                 {
                     _logger.LogWarning($"{actionName} Invalid Id - {id}");
@@ -65,10 +65,10 @@ namespace PlayerLogMvc.Campaign
                     _logger.LogWarning($"{actionName} Item not found - Id: {id}");
                     return RedirectToPage("/NotFound");
                 }
-                var model = new CampaignVM
+                var model = new CampaignDetailsVM
                 {
-                    CampaignId = item.CampaignId,
-                    CampaignName = item.CampaignName
+                    CampaignName = item.CampaignName,
+                    Npcs = item.Npcs
                 };
 
                 _logger.LogInformation($"{actionName} Success");
@@ -142,7 +142,7 @@ namespace PlayerLogMvc.Campaign
             var actionName = "Campaigns - Edit:";
             try
             {
-                _logger.LogInformation($"{actionName} Called");
+                _logger.LogInformation($"{actionName} Called - Id: {id}");
                 if (id < 1)
                 {
                     _logger.LogWarning($"{actionName} Invalid Id - {id}");
@@ -168,7 +168,7 @@ namespace PlayerLogMvc.Campaign
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{actionName} Failed - Ex");
+                _logger.LogError($"{actionName} Failed - {ex}");
                 return RedirectToPage("/InternalServerError");
             }
         }
@@ -215,7 +215,7 @@ namespace PlayerLogMvc.Campaign
             catch (Exception ex)
             {
                 _logger.LogError($"{actionName} Failed - {ex}");
-                return View();
+                return View(model);
             }
         }
 
@@ -225,7 +225,7 @@ namespace PlayerLogMvc.Campaign
             var actionName = "Campaigns - Delete:";
             try
             {
-                _logger.LogInformation($"{actionName} Called");
+                _logger.LogInformation($"{actionName} Called - Id: {id}");
                 if (id < 1)
                 {
                     _logger.LogWarning($"{actionName} Invalid Id - {id}");

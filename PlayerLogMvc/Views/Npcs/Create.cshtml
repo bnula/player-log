@@ -1,0 +1,62 @@
+﻿@model NpcDetailsVM
+@{
+    ViewBag.Title = $"Create New Npc";
+}
+
+<form class="card bg-light col-md-6 p-1 m-1 d-inline-block" method="post">
+    <div class="card-header">
+        <h2>@ViewBag.Title</h2>
+    </div>
+    <div class=" card-body">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend flex-column col-md-3 pr-2">
+                <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
+            </div>
+            <input class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
+                   asp-for="@Model.NpcName">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend flex-column col-md-3 pr-2">
+                <label class="input-group-text" for="inputGroupSelect01">Campaign</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.Campaign.CampaignId">
+                <option selected>Choose...</option>
+                @foreach (var c in ViewBag.Camps)
+                {
+                    <option value="@c.CampaignId">@c.CampaignName</option>
+                }
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend flex-column col-md-3 text-left pr-2">
+                <span class="input-group-text" id="inputGroup-sizing-default">Allegiance</span>
+            </div>
+            <input class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                   asp-for="@Model.Allegiance">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend flex-column col-md-3 pr-2">
+                <span class="input-group-text" id="inputGroup-sizing-default">Description</span>
+            </div>
+            <textarea class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                      asp-for="@Model.Description"></textarea>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend flex-column col-md-3 pr-2">
+                <span class="input-group-text" id="inputGroup-sizing-default">Notes</span>
+            </div>
+            <textarea class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
+                      asp-for="@Model.Notes">@Model.Notes</textarea>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="btn-group">
+            <button class="btn btn-success m-2 rounded" type="submit">
+                <i class="fas fa-check"></i> Create
+            </button>
+            <a asp-controller="Npcs" asp-action="Index" class="btn btn-secondary m-2 rounded">
+                <i class="fas fa-arrow-alt-circle-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+</form>

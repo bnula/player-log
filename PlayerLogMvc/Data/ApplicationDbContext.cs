@@ -15,5 +15,6 @@ namespace PlayerLogMvc.Data
         }
 
         public DbSet<Campaign.Campaign> Campaigns { get; set; }
+        public DbSet<Npc.Npc> Npcs { get; set; }
     }
 }

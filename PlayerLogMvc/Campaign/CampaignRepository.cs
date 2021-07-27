@@ -17,24 +17,28 @@ namespace PlayerLogMvc.Campaign
         }
         public async Task<bool> CreateAsync(Campaign entity)
         {
-            await _db.AddAsync(entity);
+            await _db.Campaigns.AddAsync(entity);
             return await SaveAsync();
         }
 
         public async Task<bool> DeleteAsync(Campaign entity)
         {
-            _db.Remove(entity);
+            _db.Campaigns.Remove(entity);
             return await SaveAsync();
         }
 
         public async Task<IList<Campaign>> FindAllAsync()
         {
-            return await _db.Campaigns.ToListAsync();
+            return await _db.Campaigns
+                .Include(t => t.Npcs)
+                .ToListAsync();
         }
 
         public async Task<Campaign> FindByIdAsync(int id)
         {
-            return await _db.Campaigns.FindAsync(id);
+            return await _db.Campaigns
+                .Include(t => t.Npcs)
+                .FirstOrDefaultAsync(t => t.CampaignId == id);
         }
 
         public async Task<bool> SaveAsync()
@@ -44,7 +48,7 @@ namespace PlayerLogMvc.Campaign
 
         public async Task<bool> UpdateAsync(Campaign entity)
         {
-            _db.Update(entity);
+            _db.Campaigns.Update(entity);
             return await SaveAsync();
         }
     }

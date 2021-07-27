@@ -1,0 +1,41 @@
+﻿@model NpcDetailsVM
+@{ 
+    ViewBag.Title = $"{Model.NpcName} Details";
+}
+
+<div class="card bg-light col-md-6 p-1 m-1 d-inline-block">
+    <div class="card-header">
+        <h2>@ViewBag.Title</h2>
+    </div>
+    <div class=" card-body">
+        <div class="card-group">
+            <label asp-for="Campaign" class="col-sm-3 text-info">Campaign:&nbsp;</label>
+            <p>@Model.Campaign.CampaignName</p>
+            <hr />
+        </div>
+        <div class="card-group">
+            <label asp-for="Allegiance" class="col-sm-3 text-info">Allegiance:&nbsp;</label>
+            <p>@Model.Allegiance</p>
+            <hr />
+        </div>
+        <div class="card-group">
+            <label asp-for="Description" class="col-sm-3 text-info">Description:&nbsp;</label>
+            <p>@Model.Description</p>
+            <hr />
+        </div>
+        <div class="card-group">
+            <label asp-for="Notes" class="col-sm-3 text-info">Notes:&nbsp;</label>
+            <p>@Model.Notes</p>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="btn-group">
+            <a class="btn btn-primary m-2 rounded" asp-controller="Npcs" asp-action="Edit" asp-route-id="@Model.NpcId">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a asp-controller="Npcs" asp-action="Index" type="submit" class="btn btn-secondary m-2 rounded">
+                <i class="fas fa-arrow-alt-circle-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+</div>
