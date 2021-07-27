@@ -1,4 +1,5 @@
 ﻿using PlayerLogMvc.Campaign;
+using PlayerLogMvc.Npc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,5 +26,37 @@ namespace PlayerLogMvcUnitTests.Services
 
             return camps;
         }
+
+        public static List<Npc> GetTestNpcs()
+        {
+            var npcs = new List<Npc>
+        {
+            new Npc
+            {
+                NpcId = 1,
+                NpcName = "test1",
+                Allegiance = "test1",
+                Description = "test1",
+                Notes = "test1,",
+                CampaignId = 1,
+                CurrentLocationId = 1,
+                HomeLocationId = 1
+            },
+            new Npc
+            {
+                NpcId = 2,
+                NpcName = "test2",
+                Allegiance = "test2",
+                Description = "test2",
+                Notes = "test2",
+                CampaignId = 2,
+                CurrentLocationId = 2,
+                HomeLocationId = 2
+            }
+        };
+
+            return npcs;
+        }
     }
+
 }

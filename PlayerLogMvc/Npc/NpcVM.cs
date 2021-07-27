@@ -27,6 +27,10 @@ namespace PlayerLogMvc.Npc
         public string Description { get; set; }
         public string Notes { get; set; }
         [Required]
+        public Location.Location HomeLocation { get; set; }
+        [Required]
+        public Location.Location CurrentLocation { get; set; }
+        [Required]
         public Campaign.Campaign Campaign { get; set; }
     }
 

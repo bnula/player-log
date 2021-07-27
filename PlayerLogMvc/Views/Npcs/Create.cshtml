@@ -12,7 +12,7 @@
             <div class="input-group-prepend flex-column col-md-3 pr-2">
                 <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
             </div>
-            <input class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" 
+            <input class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default"
                    asp-for="@Model.NpcName">
         </div>
         <div class="input-group mb-3">
@@ -24,6 +24,30 @@
                 @foreach (var c in ViewBag.Camps)
                 {
                     <option value="@c.CampaignId">@c.CampaignName</option>
+                }
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend flex-column col-md-3 pr-2">
+                <label class="input-group-text" for="inputGroupSelect01">Home L.</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.HomeLocation.LocationId">
+                <option selected>Choose...</option>
+                @foreach (var l in ViewBag.Locations)
+                {
+                    <option value="@l.LocationId">@l.LocationName</option>
+                }
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend flex-column col-md-3 pr-2">
+                <label class="input-group-text" for="inputGroupSelect01">Current L.</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.CurrentLocation.LocationId">
+                <option selected>Choose...</option>
+                @foreach (var l in ViewBag.Locations)
+                {
+                    <option value="@l.LocationId">@l.LocationName</option>
                 }
             </select>
         </div>

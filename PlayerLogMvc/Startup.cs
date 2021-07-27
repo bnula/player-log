@@ -7,9 +7,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PlayerLogMvc.Army;
 using PlayerLogMvc.Campaign;
+using PlayerLogMvc.Character;
 using PlayerLogMvc.Data;
+using PlayerLogMvc.Location;
 using PlayerLogMvc.Npc;
+using PlayerLogMvc.Quest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +42,11 @@ namespace PlayerLogMvc
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddScoped<ICampaignRepository, CampaignRepository>();
+            services.AddScoped<IArmyRepository, ArmyRepository>();
+            services.AddScoped<ICharacterRepository, CharacterRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<INpcRepository, NpcRepository>();
+            services.AddScoped<IQuestRepository, QuestRepository>();
             
             services.AddControllersWithViews();
             services.AddRazorPages();

@@ -41,7 +41,7 @@ namespace PlayerLogMvc.Npc
         {
             var item = await _db.Npcs
                 .Include(r => r.Campaign)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(i => i.NpcId == id);
             return item;
         }
 
