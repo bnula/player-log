@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PlayerLogMvc.Campaign;
+using PlayerLogMvc.Location;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,19 @@ namespace PlayerLogMvc.Npc
     {
         private readonly INpcRepository _repo;
         private readonly ICampaignRepository _campRepo;
+        private readonly ILocationRepository _locRepo;
         private readonly ILogger<NpcRepository> _logger;
 
         public NpcsController(
             INpcRepository repo,
             ILogger<NpcRepository> logger,
-            ICampaignRepository campRepo)
+            ICampaignRepository campRepo,
+            ILocationRepository locRepo)
         {
             _repo = repo;
             _logger = logger;
             _campRepo = campRepo;
+            _locRepo = locRepo;
         }
         public async Task<IActionResult> Index()
         {
@@ -77,7 +81,9 @@ namespace PlayerLogMvc.Npc
                     Campaign = item.Campaign,
                     Description = item.Description,
                     Notes = item.Notes,
-                    Allegiance = item.Allegiance
+                    Allegiance = item.Allegiance,
+                    HomeLocation = item.HomeLocation,
+                    CurrentLocation = item.CurrentLocation
                 };
 
                 return View(model);
@@ -92,6 +98,7 @@ namespace PlayerLogMvc.Npc
         public async Task<IActionResult> Create()
         {
             ViewBag.Camps = await _campRepo.FindAllAsync();
+            ViewBag.Locations = await _locRepo.FindAllAsync();
             return View();
         }
 
@@ -101,7 +108,7 @@ namespace PlayerLogMvc.Npc
             var actionName = "Npcs - Create(Post):";
             try
             {
-                ViewBag.Camps = await _campRepo.FindAllAsync();
+                //ViewBag.Camps = await _campRepo.FindAllAsync();
                 if (!ModelState.IsValid)
                 {
                     ModelState.AddModelError("x", "Please fix validation errors");
@@ -114,7 +121,9 @@ namespace PlayerLogMvc.Npc
                     Description = model.Description,
                     Allegiance = model.Allegiance,
                     Notes = model.Notes,
-                    CampaignId = model.Campaign.CampaignId
+                    CampaignId = model.Campaign.CampaignId,
+                    HomeLocationId = model.HomeLocation.LocationId,
+                    CurrentLocationId = model.CurrentLocation.LocationId
                 };
 
                 var success = await _repo.CreateAsync(item);
@@ -143,6 +152,7 @@ namespace PlayerLogMvc.Npc
             {
                 _logger.LogInformation($"{actionName} Called - Id: {id}");
                 ViewBag.Camps = await _campRepo.FindAllAsync();
+                ViewBag.Locations = await _locRepo.FindAllAsync();
                 if (id < 0)
                 {
                     _logger.LogWarning($"{actionName} Invalid Id - {id}");
@@ -164,7 +174,9 @@ namespace PlayerLogMvc.Npc
                     Campaign = item.Campaign,
                     Description = item.Description,
                     Notes = item.Notes,
-                    Allegiance = item.Allegiance
+                    Allegiance = item.Allegiance,
+                    CurrentLocation = item.CurrentLocation,
+                    HomeLocation = item.HomeLocation
                 };
 
                 return View(model);
@@ -184,6 +196,7 @@ namespace PlayerLogMvc.Npc
             {
                 _logger.LogInformation($"{actionName} Called");
                 ViewBag.Camps = await _campRepo.FindAllAsync();
+                ViewBag.Locations = await _locRepo.FindAllAsync();
                 if (!ModelState.IsValid)
                 {
                     ModelState.AddModelError("x", "Please fix validation errors");
@@ -197,7 +210,9 @@ namespace PlayerLogMvc.Npc
                     Description = model.Description,
                     Allegiance = model.Allegiance,
                     Notes = model.Notes,
-                    Campaign = model.Campaign
+                    CampaignId = model.Campaign.CampaignId,
+                    HomeLocationId = model.HomeLocation.LocationId,
+                    CurrentLocationId = model.CurrentLocation.LocationId
                 };
 
                 var success = await _repo.UpdateAsync(item);
@@ -215,6 +230,44 @@ namespace PlayerLogMvc.Npc
             {
                 _logger.LogError($"{actionName} Failed - {ex}");
                 return View(model);
+            }
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var actionName = "Npcs - Delete:";
+            try
+            {
+                _logger.LogInformation($"{actionName} Called - Id: {id}");
+                if (id < 1)
+                {
+                    _logger.LogWarning($"{actionName} Invalid Id - {id}");
+                    return RedirectToPage("/BadRequest");
+                }
+
+                var item = await _repo.FindByIdAsync(id);
+
+                if (item is null)
+                {
+                    _logger.LogWarning($"{actionName} Item Not Found - Id: {id}");
+                    return NotFound("/Not Found");
+                }
+
+                var success = await _repo.DeleteAsync(item);
+
+                if (!success)
+                {
+                    _logger.LogWarning($"{actionName} Failed");
+                    return RedirectToPage("/InternalServerError");
+                }
+
+                _logger.LogInformation($"{actionName} Success");
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{actionName} Failed - {ex}");
+                return RedirectToPage("/InternalServerError");
             }
         }
     }

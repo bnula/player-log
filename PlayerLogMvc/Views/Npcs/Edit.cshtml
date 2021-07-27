@@ -3,7 +3,7 @@
     ViewBag.Title = $"Edit {Model.NpcName}";
 }
 
-<form class="card bg-light col-md-6 p-1 m-1 d-inline-block" asp-action="Edit">
+<form class="card bg-light col-md-6 p-1 m-1 d-inline-block" asp-action="Edit" method="post">
     <div class="card-header">
         <h2>@ViewBag.Title</h2>
     </div>
@@ -27,6 +27,30 @@
             </select>
         </div>
         <div class="input-group mb-3">
+            <div class="input-group-prepend flex-column col-md-3 pr-2">
+                <label class="input-group-text" for="inputGroupSelect01">Home L.</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.HomeLocation.LocationId">
+                <option selected value="@Model.HomeLocation.LocationId">Choose...</option>
+                @foreach (var l in ViewBag.Locations)
+                {
+                    <option value="@l.LocationId">@l.LocationName</option>
+                }
+            </select>
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend flex-column col-md-3 pr-2">
+                <label class="input-group-text" for="inputGroupSelect01">Current L.</label>
+            </div>
+            <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.CurrentLocation.LocationId">
+                <option selected value="@Model.CurrentLocation.LocationId">Choose...</option>
+                @foreach (var l in ViewBag.Locations)
+                {
+                    <option value="@l.LocationId">@l.LocationName</option>
+                }
+            </select>
+        </div>
+        <div class="input-group mb-3">
             <div class="input-group-prepend flex-column col-md-3 text-left pr-2">
                 <span class="input-group-text" id="inputGroup-sizing-default">Allegiance</span>
             </div>
@@ -36,7 +60,7 @@
             <div class="input-group-prepend flex-column col-md-3 pr-2">
                 <span class="input-group-text" id="inputGroup-sizing-default">Description</span>
             </div>
-            <textarea type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" >@Model.Description</textarea>
+            <textarea type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">@Model.Description</textarea>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend flex-column col-md-3 pr-2">
