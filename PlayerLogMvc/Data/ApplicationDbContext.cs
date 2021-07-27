@@ -16,5 +16,9 @@ namespace PlayerLogMvc.Data
 
         public DbSet<Campaign.Campaign> Campaigns { get; set; }
         public DbSet<Npc.Npc> Npcs { get; set; }
+        public DbSet<Location.Location> Locations { get; set; }
+        public DbSet<Army.Army> Armies { get; set; }
+        public DbSet<Character.Character> Characters { get; set; }
+        public DbSet<Quest.Quest> Quests { get; set; }
     }
 }
