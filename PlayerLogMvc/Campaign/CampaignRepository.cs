@@ -31,6 +31,7 @@ namespace PlayerLogMvc.Campaign
         {
             return await _db.Campaigns
                 .Include(t => t.Npcs)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
@@ -38,6 +39,7 @@ namespace PlayerLogMvc.Campaign
         {
             return await _db.Campaigns
                 .Include(t => t.Npcs)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(t => t.CampaignId == id);
         }
 
