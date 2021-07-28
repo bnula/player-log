@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Location
+namespace PlayerLogMvc.Quests
 {
-    public interface ILocationRepository : IRepositoryBase<Location>
+    public interface IQuestRepository : IRepositoryBase<Quest>
     {
         
     }

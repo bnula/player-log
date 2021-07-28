@@ -1,4 +1,5 @@
 ﻿using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Locations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,9 +17,9 @@ namespace PlayerLogMvc.Npcs
         public string Allegiance { get; set; }
         public string Description { get; set; }
         public string Notes { get; set; }
-        public Location.Location HomeLocation { get; set; }
+        public Location HomeLocation { get; set; }
         public int HomeLocationId { get; set; }
-        public Location.Location CurrentLocation { get; set; }
+        public Location CurrentLocation { get; set; }
         public int CurrentLocationId { get; set; }
         public Campaign Campaign { get; set; }
         public int CampaignId { get; set; }

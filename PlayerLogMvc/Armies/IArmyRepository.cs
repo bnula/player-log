@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Quest
+namespace PlayerLogMvc.Armies
 {
-    public interface IQuestRepository : IRepositoryBase<Quest>
+    public interface IArmyRepository : IRepositoryBase<Army>
     {
         
     }

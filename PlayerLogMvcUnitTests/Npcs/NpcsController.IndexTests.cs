@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using PlayerLogMvc.Campaigns;
-using PlayerLogMvc.Location;
+using PlayerLogMvc.Locations;
 using PlayerLogMvc.Npcs;
 using PlayerLogMvcUnitTests.Services;
 using System;
@@ -59,6 +59,21 @@ namespace PlayerLogMvcUnitTests.Npcs
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<IEnumerable<NpcVM>>(viewResult.ViewData.Model);
             Assert.Empty(model);
+        }
+
+        [Fact]
+        public async Task ThrowsError_ReturnInternalServerError()
+        {
+            // Arrange
+            _mockRepo.Setup(repo => repo.FindAllAsync())
+                .Throws(new Exception());
+
+            // Act
+            var result = await _sut.Index();
+
+            // Assert
+            var redirectToPageResult = Assert.IsType<RedirectToPageResult>(result);
+            Assert.Equal("/InternalServerError", redirectToPageResult.PageName);
         }
     }
 }

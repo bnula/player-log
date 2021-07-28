@@ -13,14 +13,14 @@ using Xunit;
 
 namespace PlayerLogMvcUnitTests.Npcs
 {
-    public class EditTests
+    public class DetailsTests
     {
         Mock<INpcRepository> _mockRepo;
         NpcsController _sut;
         Npc _savedNpc;
         NpcDetailsVM _updatedNpc;
 
-        public EditTests()
+        public DetailsTests()
         {
             _mockRepo = new Mock<INpcRepository>();
             var mockLogger = new Mock<ILogger<NpcRepository>>();
@@ -50,88 +50,26 @@ namespace PlayerLogMvcUnitTests.Npcs
         }
 
         [Fact]
-        public async Task ValidId_ReturnViewWithModel()
+        public async Task ValidId_ReturnViewWithViewModel()
         {
             // Arrange
-            _mockRepo.Setup(repo => repo.FindByIdAsync(It.IsAny<int>()))
-                .ReturnsAsync(_savedNpc);
+            var npc = new Npc
+            {
+                NpcId = 1,
+                NpcName = "test"
+            };
+
+            _mockRepo.Setup(repo => repo.FindByIdAsync(1))
+                .ReturnsAsync(npc);
+
 
             // Act
-            var result = await _sut.Edit(1);
+            var result = await _sut.Details(1);
 
             // Assert
-            _mockRepo.Verify(repo => repo.FindByIdAsync(It.IsAny<int>()), Times.Once);
-            _mockRepo.Verify(repo => repo.UpdateAsync(It.IsAny<Npc>()), Times.Never);
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsType<NpcDetailsVM>(viewResult.Model);
-            Assert.Equal("Edit", viewResult.ViewName);
-            Assert.Equal(_savedNpc.NpcName, model.NpcName);
-        }
-
-        [Fact]
-        public async Task PostValidModel_UpdateItemInDbAndReturnToIndex()
-        {
-            // Arrange
-            _mockRepo.Setup(repo => repo.UpdateAsync(It.IsAny<Npc>()))
-                .ReturnsAsync(true)
-                .Callback<Npc>(x => _savedNpc = x);
-
-            // Act
-            var result = await _sut.Edit(_updatedNpc);
-
-            // Assert
-            _mockRepo.Verify(repo => repo.UpdateAsync(It.IsAny<Npc>()), Times.Once);
-            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal("Index", redirectToActionResult.ActionName);
-            Assert.Equal(_updatedNpc.NpcName, _savedNpc.NpcName);
-        }
-
-        [Fact]
-        public async Task PostFailedUpdate_ReturnViewWithModel()
-        {
-            // Arrange
-            _mockRepo.Setup(repo => repo.UpdateAsync(It.IsAny<Npc>()))
-                .ReturnsAsync(false);
-
-            // Act
-            var result = await _sut.Edit(_updatedNpc);
-
-            // Assert
-            var redirectToPageResult = Assert.IsType<RedirectToPageResult>(result);
-            Assert.Equal("/InternalServerError", redirectToPageResult.PageName);
-        }
-
-        [Fact]
-        public async Task InvalidModel_ReturnViewWithModel()
-        {
-            // Arrange
-            _sut.ModelState.AddModelError("x", "Test error");
-
-            // Act
-            var result = await _sut.Edit(_updatedNpc);
-
-            // Assert
-            _mockRepo.Verify(repo => repo.UpdateAsync(It.IsAny<Npc>()), Times.Never);
-
-            var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsType<NpcDetailsVM>(viewResult.Model);
-            Assert.False(viewResult.ViewData.ModelState.IsValid);
-            Assert.Equal(_updatedNpc.NpcName, model.NpcName);
-        }
-
-        [Fact]
-        public async Task NullModel_ReturnBadRequest()
-        {
-            // Arrange
-            NpcDetailsVM npc = null;
-
-            // Act
-            var result = await _sut.Edit(npc);
-
-            // Assert
-            _mockRepo.Verify(repo => repo.UpdateAsync(It.IsAny<Npc>()), Times.Never);
-            var redirectToPageResult = Assert.IsType<RedirectToPageResult>(result);
-            Assert.Equal("/BadRequest", redirectToPageResult.PageName);
+            var model = Assert.IsAssignableFrom<NpcDetailsVM>(viewResult.Model);
+            Assert.Equal(npc.NpcName, model.NpcName);
         }
 
         [Fact]
@@ -140,7 +78,7 @@ namespace PlayerLogMvcUnitTests.Npcs
             // Arrange
 
             // Act
-            var result = await _sut.Edit(0);
+            var result = await _sut.Details(0);
             var redirectResult = Assert.IsType<RedirectToPageResult>(result);
 
             // Assert
@@ -158,7 +96,7 @@ namespace PlayerLogMvcUnitTests.Npcs
                 .ReturnsAsync(npc);
 
             // Act
-            var result = await _sut.Edit(2);
+            var result = await _sut.Details(2);
             var redirectResult = Assert.IsType<RedirectToPageResult>(result);
 
             // Assert

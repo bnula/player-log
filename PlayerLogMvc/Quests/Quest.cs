@@ -1,4 +1,5 @@
 ﻿using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Locations;
 using PlayerLogMvc.Npcs;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Quest
+namespace PlayerLogMvc.Quests
 {
     public class Quest
     {
@@ -15,7 +16,7 @@ namespace PlayerLogMvc.Quest
         public string Reward { get; set; }
         public string Description { get; set; }
         public string Notes { get; set; }
-        public Location.Location StartingLocation { get; set; }
+        public Location StartingLocation { get; set; }
         public int StartingLocationId { get; set; }
         public Npc QuestGiver { get; set; }
         public int QuestGiverId { get; set; }

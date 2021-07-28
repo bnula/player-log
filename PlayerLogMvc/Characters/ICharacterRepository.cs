@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Army
+namespace PlayerLogMvc.Characters
 {
-    public interface IArmyRepository : IRepositoryBase<Army>
+    public interface ICharacterRepository : IRepositoryBase<Character>
     {
         
     }

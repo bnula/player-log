@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PlayerLogMvc.Campaigns;
-using PlayerLogMvc.Location;
+using PlayerLogMvc.Locations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +60,7 @@ namespace PlayerLogMvc.Npcs
             try
             {
                 _logger.LogInformation($"{actionName} Called - Id: {id}");
-                if (id < 0)
+                if (id < 1)
                 {
                     _logger.LogWarning($"{actionName} Invalid Id - {id}");
                     return RedirectToPage("/BadRequest");
@@ -154,7 +154,7 @@ namespace PlayerLogMvc.Npcs
                 _logger.LogInformation($"{actionName} Called - Id: {id}");
                 ViewBag.Camps = await _campRepo.FindAllAsync();
                 ViewBag.Locations = await _locRepo.FindAllAsync();
-                if (id < 0)
+                if (id < 1)
                 {
                     _logger.LogWarning($"{actionName} Invalid Id - {id}");
                     return RedirectToPage("/BadRequest");
@@ -180,7 +180,7 @@ namespace PlayerLogMvc.Npcs
                     HomeLocation = item.HomeLocation
                 };
 
-                return View(model);
+                return View("Edit", model);
             }
             catch (Exception ex)
             {
@@ -204,6 +204,12 @@ namespace PlayerLogMvc.Npcs
                     return View(model);
                 }
 
+                if (model is null)
+                {
+                    _logger.LogWarning($"{actionName} Model is Null");
+                    return RedirectToPage("/BadRequest");
+                }
+
                 var item = new Npc
                 {
                     NpcName = model.NpcName,
@@ -220,8 +226,8 @@ namespace PlayerLogMvc.Npcs
 
                 if (!success)
                 {
-                    ModelState.AddModelError("x", "Something went wrong, try again");
-                    return View(model);
+                    _logger.LogError($"{actionName} Failed");
+                    return RedirectToPage("/InternalServerError");
                 }
 
                 _logger.LogInformation($"{actionName} Success");
@@ -230,7 +236,7 @@ namespace PlayerLogMvc.Npcs
             catch (Exception ex)
             {
                 _logger.LogError($"{actionName} Failed - {ex}");
-                return View(model);
+                return RedirectToPage("/InternalServerError");
             }
         }
 
@@ -251,7 +257,7 @@ namespace PlayerLogMvc.Npcs
                 if (item is null)
                 {
                     _logger.LogWarning($"{actionName} Item Not Found - Id: {id}");
-                    return NotFound("/Not Found");
+                    return RedirectToPage("/NotFound");
                 }
 
                 var success = await _repo.DeleteAsync(item);

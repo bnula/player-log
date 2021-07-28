@@ -41,7 +41,7 @@ namespace PlayerLogMvc.Campaigns
             catch (Exception ex)
             {
                 _logger.LogError($"{actionName} Failed - {ex}");
-                return null;
+                return RedirectToPage("/InternalServerError");
             }
             
 

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Quest
+namespace PlayerLogMvc.Quests
 {
     public class QuestRepository : IQuestRepository
     {

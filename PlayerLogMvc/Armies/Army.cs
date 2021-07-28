@@ -1,4 +1,5 @@
 ﻿using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Locations;
 using PlayerLogMvc.Npcs;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Army
+namespace PlayerLogMvc.Armies
 {
     public class Army
     {
@@ -16,9 +17,9 @@ namespace PlayerLogMvc.Army
         public string ArmyComposition { get; set; }
         public Campaign Campaign { get; set; }
         public int CampaignId { get; set; }
-        public Location.Location HomeLocation { get; set; }
+        public Location HomeLocation { get; set; }
         public int HomeLocationId { get; set; }
-        public Location.Location CurrentLocation { get; set; }
+        public Location CurrentLocation { get; set; }
         public int CurrentLocationId { get; set; }
         public Npc Leader { get; set; }
         public int LeaderId { get; set; }

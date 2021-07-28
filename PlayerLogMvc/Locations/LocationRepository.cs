@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Location
+namespace PlayerLogMvc.Locations
 {
     public class LocationRepository : ILocationRepository
     {

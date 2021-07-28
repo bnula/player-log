@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Army
+namespace PlayerLogMvc.Armies
 {
     public class ArmyRepository : IArmyRepository
     {

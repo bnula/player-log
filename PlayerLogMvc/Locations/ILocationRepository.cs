@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Character
+namespace PlayerLogMvc.Locations
 {
-    public interface ICharacterRepository : IRepositoryBase<Character>
+    public interface ILocationRepository : IRepositoryBase<Location>
     {
         
     }

@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using PlayerLogMvc.Campaigns;
-using PlayerLogMvc.Location;
+using PlayerLogMvc.Locations;
 using PlayerLogMvc.Npcs;
 using System;
 using System.Collections.Generic;
