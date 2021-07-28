@@ -60,7 +60,6 @@ namespace PlayerLogMvcUnitTests.Npcs
             var model = Assert.IsAssignableFrom<IEnumerable<NpcVM>>(viewResult.ViewData.Model);
             Assert.Empty(model);
         }
-
         [Fact]
         public async Task ThrowsError_ReturnInternalServerError()
         {

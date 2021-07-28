@@ -109,7 +109,7 @@ namespace PlayerLogMvc.Npcs
             var actionName = "Npcs - Create(Post):";
             try
             {
-                ViewBag.Camps = await _campRepo.FindAllAsync();
+                //ViewBag.Camps = await _campRepo.FindAllAsync();
                 if (!ModelState.IsValid)
                 {
                     ModelState.AddModelError("x", "Please fix validation errors");
