@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PlayerLogMvc.Campaign;
+using PlayerLogMvc.Campaigns;
 using PlayerLogMvc.Location;
-using PlayerLogMvc.Npc;
+using PlayerLogMvc.Npcs;
 using PlayerLogMvcUnitTests.Services;
 using System;
 using System.Collections.Generic;

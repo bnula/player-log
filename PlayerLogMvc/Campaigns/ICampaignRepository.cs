@@ -2,13 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Npc
+namespace PlayerLogMvc.Campaigns
 {
-    public interface INpcRepository : IRepositoryBase<Npc>
+    public interface ICampaignRepository : IRepositoryBase<Campaign>
     {
-        
     }
 }

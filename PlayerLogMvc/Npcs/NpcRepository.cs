@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Npc
+namespace PlayerLogMvc.Npcs
 {
     public class NpcRepository : INpcRepository
     {

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PlayerLogMvc.Campaigns;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Npc
+namespace PlayerLogMvc.Npcs
 {
     public class Npc
     {
@@ -19,7 +20,7 @@ namespace PlayerLogMvc.Npc
         public int HomeLocationId { get; set; }
         public Location.Location CurrentLocation { get; set; }
         public int CurrentLocationId { get; set; }
-        public Campaign.Campaign Campaign { get; set; }
+        public Campaign Campaign { get; set; }
         public int CampaignId { get; set; }
     }
 }

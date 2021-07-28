@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PlayerLogMvc.Campaign;
+using PlayerLogMvc.Campaigns;
 using PlayerLogMvcUnitTests.Services;
 using System;
 using System.Collections.Generic;
@@ -55,6 +55,21 @@ namespace PlayerLogMvcUnitTests
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<IEnumerable<CampaignVM>>(viewResult.ViewData.Model);
             Assert.Empty(model);
+        }
+
+        [Fact]
+        public async Task ThrowsError_ReturnInternalServerError()
+        {
+            // Assert
+            _mockRepo.Setup(repo => repo.FindAllAsync())
+                .Throws(new AccessViolationException());
+
+            // Act
+            var result = await _sut.Index();
+
+            // Assert
+            var redirectToPageResult = Assert.IsType<RedirectToPageResult>(result);
+            Assert.Equal("/InternalServerError", redirectToPageResult.PageName);
         }
     }
 }

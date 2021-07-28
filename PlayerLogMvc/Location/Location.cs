@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayerLogMvc.Campaigns;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,6 @@ namespace PlayerLogMvc.Location
         public string LocationType { get; set; }
         public string LocationInventory { get; set; }
         public int CampaignId { get; set; }
-        public Campaign.Campaign Campaign { get; set; }
+        public Campaign Campaign { get; set; }
     }
 }

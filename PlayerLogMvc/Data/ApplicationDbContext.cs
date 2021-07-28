@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PlayerLogMvc.Campaign;
+using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Npcs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,8 +15,8 @@ namespace PlayerLogMvc.Data
         {
         }
 
-        public DbSet<Campaign.Campaign> Campaigns { get; set; }
-        public DbSet<Npc.Npc> Npcs { get; set; }
+        public DbSet<Campaign> Campaigns { get; set; }
+        public DbSet<Npc> Npcs { get; set; }
         public DbSet<Location.Location> Locations { get; set; }
         public DbSet<Army.Army> Armies { get; set; }
         public DbSet<Character.Character> Characters { get; set; }

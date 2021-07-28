@@ -1,5 +1,5 @@
-﻿using PlayerLogMvc.Campaign;
-using PlayerLogMvc.Npc;
+﻿using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Npcs;
 using System;
 using System.Collections.Generic;
 using System.Linq;

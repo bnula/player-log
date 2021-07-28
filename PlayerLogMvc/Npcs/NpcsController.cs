@@ -1,38 +1,47 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Location;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace PlayerLogMvc.Campaign
+namespace PlayerLogMvc.Npcs
 {
-    public class CampaignsController : Controller
+    public class NpcsController : Controller
     {
-        private readonly ICampaignRepository _repo;
-        private readonly ILogger _logger;
+        private readonly INpcRepository _repo;
+        private readonly ICampaignRepository _campRepo;
+        private readonly ILocationRepository _locRepo;
+        private readonly ILogger<NpcRepository> _logger;
 
-        public CampaignsController(
-            ICampaignRepository repo,
-            ILogger<CampaignRepository> logger)
+        public NpcsController(
+            INpcRepository repo,
+            ILogger<NpcRepository> logger,
+            ICampaignRepository campRepo,
+            ILocationRepository locRepo)
         {
             _repo = repo;
             _logger = logger;
+            _campRepo = campRepo;
+            _locRepo = locRepo;
         }
-        // GET: CampaignsController
         public async Task<IActionResult> Index()
         {
-            var actionName = "Campaigns - Index:";
+            var actionName = "Npcs - Index:";
             try
             {
                 _logger.LogInformation($"{actionName} Called");
                 var items = await _repo.FindAllAsync();
 
-                var model = items.Select(i => new CampaignVM
+                var model = items.Select(i => new NpcVM
                 {
-                    CampaignId = i.CampaignId,
-                    CampaignName = i.CampaignName
+                    NpcId = i.NpcId,
+                    NpcName = i.NpcName,
+                    Allegiance = i.Allegiance,
+                    Campaign = i.Campaign
                 });
 
                 _logger.LogInformation($"{actionName} Success");
@@ -41,34 +50,40 @@ namespace PlayerLogMvc.Campaign
             catch (Exception ex)
             {
                 _logger.LogError($"{actionName} Failed - {ex}");
-                return null;
+                return RedirectToPage("/InternalServerError");
             }
-            
-
         }
 
-        // GET: CampaignsController/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            var actionName = "Campaigns - Details:";
+            var actionName = "Npcs - Details:";
             try
             {
                 _logger.LogInformation($"{actionName} Called - Id: {id}");
-                if (id < 1)
+                if (id < 0)
                 {
                     _logger.LogWarning($"{actionName} Invalid Id - {id}");
                     return RedirectToPage("/BadRequest");
                 }
+
                 var item = await _repo.FindByIdAsync(id);
-                if (item is null)
+
+                if (item  == null)
                 {
-                    _logger.LogWarning($"{actionName} Item not found - Id: {id}");
+                    _logger.LogWarning($"{actionName} Item Not Found - Id: {id}");
                     return RedirectToPage("/NotFound");
                 }
-                var model = new CampaignDetailsVM
+
+                var model = new NpcDetailsVM
                 {
-                    CampaignName = item.CampaignName,
-                    Npcs = item.Npcs
+                    NpcId = item.NpcId,
+                    NpcName = item.NpcName,
+                    Campaign = item.Campaign,
+                    Description = item.Description,
+                    Notes = item.Notes,
+                    Allegiance = item.Allegiance,
+                    HomeLocation = item.HomeLocation,
+                    CurrentLocation = item.CurrentLocation
                 };
 
                 _logger.LogInformation($"{actionName} Success");
@@ -81,49 +96,43 @@ namespace PlayerLogMvc.Campaign
             }
         }
 
-        // GET: CampaignsController/Create
-        public ActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var actionName = "Campaigns - Create:";
-            _logger.LogInformation($"{actionName} Called");
-            try
-            {
-                return View();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"{actionName} Failed - {ex}");
-                return RedirectToPage("/InternalServerError");
-            }
+            ViewBag.Camps = await _campRepo.FindAllAsync();
+            ViewBag.Locations = await _locRepo.FindAllAsync();
+            return View();
         }
 
-        // POST: CampaignsController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(CampaignVM model)
+        public async Task<IActionResult> Create(NpcDetailsVM model)
         {
-            var actionName = "Campaigns - Create(Post):";
-            _logger.LogInformation($"{actionName} Called");
+            var actionName = "Npcs - Create(Post):";
             try
             {
+                ViewBag.Camps = await _campRepo.FindAllAsync();
                 if (!ModelState.IsValid)
                 {
                     ModelState.AddModelError("x", "Please fix validation errors");
                     return View(model);
                 }
 
-                var item = new Campaign
+                var item = new Npc
                 {
-                    CampaignName = model.CampaignName
+                    NpcName = model.NpcName,
+                    Description = model.Description,
+                    Allegiance = model.Allegiance,
+                    Notes = model.Notes,
+                    CampaignId = model.Campaign.CampaignId,
+                    HomeLocationId = model.HomeLocation.LocationId,
+                    CurrentLocationId = model.CurrentLocation.LocationId
                 };
 
                 var success = await _repo.CreateAsync(item);
 
                 if (!success)
                 {
-                    ModelState.AddModelError("x", "Creation failed");
-                    _logger.LogWarning("Creation failed");
-                    return View(model);
+                    _logger.LogInformation($"{actionName} Failed");
+                    return RedirectToPage("/InternalServerError");
                 }
 
                 _logger.LogInformation($"{actionName} Success");
@@ -131,19 +140,21 @@ namespace PlayerLogMvc.Campaign
             }
             catch (Exception ex)
             {
-                _logger.LogError($"{actionName} Failed - {ex}");
+                _logger.LogInformation($"{actionName} Failed - {ex}");
+                ViewBag.Error = $"{ex.Message} - {ex.InnerException}";
                 return RedirectToPage("/InternalServerError");
             }
         }
 
-        // GET: CampaignsController/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var actionName = "Campaigns - Edit:";
+            var actionName = "Npcs - Edit:";
             try
             {
                 _logger.LogInformation($"{actionName} Called - Id: {id}");
-                if (id < 1)
+                ViewBag.Camps = await _campRepo.FindAllAsync();
+                ViewBag.Locations = await _locRepo.FindAllAsync();
+                if (id < 0)
                 {
                     _logger.LogWarning($"{actionName} Invalid Id - {id}");
                     return RedirectToPage("/BadRequest");
@@ -151,20 +162,25 @@ namespace PlayerLogMvc.Campaign
 
                 var item = await _repo.FindByIdAsync(id);
 
-                if (item is null)
+                if (item == null)
                 {
-                    _logger.LogWarning($"{actionName} Item not Found - Id: {id}");
+                    _logger.LogWarning($"{actionName} Item Not Found - Id: {id}");
                     return RedirectToPage("/NotFound");
                 }
 
-                var model = new CampaignVM
+                var model = new NpcDetailsVM
                 {
-                    CampaignId = item.CampaignId,
-                    CampaignName = item.CampaignName
+                    NpcId = item.NpcId,
+                    NpcName = item.NpcName,
+                    Campaign = item.Campaign,
+                    Description = item.Description,
+                    Notes = item.Notes,
+                    Allegiance = item.Allegiance,
+                    CurrentLocation = item.CurrentLocation,
+                    HomeLocation = item.HomeLocation
                 };
 
-                _logger.LogInformation($"{actionName} Success");
-                return View("Edit", model);
+                return View(model);
             }
             catch (Exception ex)
             {
@@ -173,39 +189,38 @@ namespace PlayerLogMvc.Campaign
             }
         }
 
-        // POST: CampaignsController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(CampaignVM model)
+        public async Task<IActionResult> Edit(NpcDetailsVM model)
         {
-            var actionName = "Campaigns - Edit(Post):";
+            var actionName = "Npcs - Edit(Post):";
             try
             {
                 _logger.LogInformation($"{actionName} Called");
-
+                ViewBag.Camps = await _campRepo.FindAllAsync();
+                ViewBag.Locations = await _locRepo.FindAllAsync();
                 if (!ModelState.IsValid)
                 {
                     ModelState.AddModelError("x", "Please fix validation errors");
                     return View(model);
                 }
 
-                if (model is null)
+                var item = new Npc
                 {
-                    _logger.LogWarning($"{actionName} Empty model");
-                    return RedirectToPage("/BadRequest");
-                }
-
-                var item = new Campaign
-                {
-                    CampaignId = model.CampaignId,
-                    CampaignName = model.CampaignName
+                    NpcName = model.NpcName,
+                    NpcId = model.NpcId,
+                    Description = model.Description,
+                    Allegiance = model.Allegiance,
+                    Notes = model.Notes,
+                    CampaignId = model.Campaign.CampaignId,
+                    HomeLocationId = model.HomeLocation.LocationId,
+                    CurrentLocationId = model.CurrentLocation.LocationId
                 };
 
                 var success = await _repo.UpdateAsync(item);
 
                 if (!success)
                 {
-                    ModelState.AddModelError("x", "Something went wrong, try again.");
+                    ModelState.AddModelError("x", "Something went wrong, try again");
                     return View(model);
                 }
 
@@ -219,10 +234,9 @@ namespace PlayerLogMvc.Campaign
             }
         }
 
-        // POST: CampaignsController/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var actionName = "Campaigns - Delete:";
+            var actionName = "Npcs - Delete:";
             try
             {
                 _logger.LogInformation($"{actionName} Called - Id: {id}");
@@ -237,14 +251,14 @@ namespace PlayerLogMvc.Campaign
                 if (item is null)
                 {
                     _logger.LogWarning($"{actionName} Item Not Found - Id: {id}");
-                    return RedirectToPage("/NotFound");
+                    return NotFound("/Not Found");
                 }
 
                 var success = await _repo.DeleteAsync(item);
 
                 if (!success)
                 {
-                    _logger.LogError($"{actionName} Failed");
+                    _logger.LogWarning($"{actionName} Failed");
                     return RedirectToPage("/InternalServerError");
                 }
 
@@ -256,14 +270,6 @@ namespace PlayerLogMvc.Campaign
                 _logger.LogError($"{actionName} Failed - {ex}");
                 return RedirectToPage("/InternalServerError");
             }
-        }
-
-        // Will need to figure out how to mock Controller and Action names in Unit tests
-        private string GetControllerActionNames()
-        {
-            var controller = ControllerContext.ActionDescriptor.ControllerName;
-            var action = ControllerContext.ActionDescriptor.ActionName;
-            return $"{controller} - {action}:";
         }
     }
 }

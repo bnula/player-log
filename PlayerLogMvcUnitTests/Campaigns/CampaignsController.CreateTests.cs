@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using PlayerLogMvc.Campaign;
+using PlayerLogMvc.Campaigns;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,7 +74,7 @@ namespace PlayerLogMvcUnitTests.Campaigns
         }
 
         [Fact]
-        public async Task UnsuccessfulCreation_ReturnViewWithModel()
+        public async Task UnsuccessfulCreation_ReturnInternalServerError()
         {
             // Arrange
             var newCamp = new CampaignVM
@@ -89,9 +89,23 @@ namespace PlayerLogMvcUnitTests.Campaigns
             var result = await _sut.Create(newCamp);
 
             // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsType<CampaignVM>(viewResult.Model);
-            Assert.Equal(newCamp.CampaignName, model.CampaignName);
+            var redirectToPageResult = Assert.IsType<RedirectToPageResult>(result);
+            Assert.Equal("/InternalServerError", redirectToPageResult.PageName);
+        }
+
+        [Fact]
+        public async Task ThrowsError_ReturnInternalServerError()
+        {
+            // Assert
+            _mockRepo.Setup(repo => repo.CreateAsync(It.IsAny<Campaign>()))
+                .Throws(new AccessViolationException());
+
+            // Act
+            var result = await _sut.Create(new CampaignVM());
+
+            // Assert
+            var redirectToPageResult = Assert.IsType<RedirectToPageResult>(result);
+            Assert.Equal("/InternalServerError", redirectToPageResult.PageName);
         }
     }
 }
