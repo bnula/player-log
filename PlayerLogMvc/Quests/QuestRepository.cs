@@ -28,7 +28,7 @@ namespace PlayerLogMvc.Quests
             return await SaveAsync();
         }
 
-        public async Task<IList<Quest>> FindAllAsync()
+        public async Task<IEnumerable<Quest>> FindAllAsync()
         {
             var items = await _db.Quests.ToListAsync();
             return items;

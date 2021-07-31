@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +15,21 @@ namespace PlayerLogMvcUnitTests.Campaigns
 {
     public class DeleteTests
     {
-        Mock<ICampaignRepository> _mockRepo;
-        Mock<ILogger<CampaignRepository>> _mockLogger;
-        CampaignsController _sut;
+        private readonly Mock<ICampaignRepository> _mockRepo;
+        private readonly Mock<ILogger<CampaignRepository>> _mockLogger;
+        private readonly IMapper _mapper;
+        private readonly CampaignsController _sut;
 
         public DeleteTests()
         {
             _mockRepo = new Mock<ICampaignRepository>();
             _mockLogger = new Mock<ILogger<CampaignRepository>>();
-            _sut = new CampaignsController(_mockRepo.Object, _mockLogger.Object);
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile(new Maps());
+            });
+            _mapper = mapperConfig.CreateMapper();
+            _sut = new CampaignsController(_mockRepo.Object, _mockLogger.Object, _mapper);
         }
 
         [Fact]

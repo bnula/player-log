@@ -27,7 +27,7 @@ namespace PlayerLogMvc.Campaigns
             return await SaveAsync();
         }
 
-        public async Task<IList<Campaign>> FindAllAsync()
+        public async Task<IEnumerable<Campaign>> FindAllAsync()
         {
             return await _db.Campaigns
                 .Include(t => t.Npcs)

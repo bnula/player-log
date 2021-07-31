@@ -28,7 +28,7 @@ namespace PlayerLogMvc.Locations
             return await SaveAsync();
         }
 
-        public async Task<IList<Location>> FindAllAsync()
+        public async Task<IEnumerable<Location>> FindAllAsync()
         {
             var items = await _db.Locations.ToListAsync();
             return items;

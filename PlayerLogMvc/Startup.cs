@@ -17,6 +17,7 @@ using PlayerLogMvc.Quests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace PlayerLogMvc
@@ -37,6 +38,8 @@ namespace PlayerLogMvc
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

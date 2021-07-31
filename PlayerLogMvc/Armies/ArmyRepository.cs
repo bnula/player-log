@@ -28,7 +28,7 @@ namespace PlayerLogMvc.Armies
             return await SaveAsync();
         }
 
-        public async Task<IList<Army>> FindAllAsync()
+        public async Task<IEnumerable<Army>> FindAllAsync()
         {
             var items = await _db.Armies.ToListAsync();
             return items;

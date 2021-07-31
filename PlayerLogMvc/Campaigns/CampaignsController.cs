@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,13 +13,16 @@ namespace PlayerLogMvc.Campaigns
     {
         private readonly ICampaignRepository _repo;
         private readonly ILogger _logger;
+        private readonly IMapper _mapper;
 
         public CampaignsController(
             ICampaignRepository repo,
-            ILogger<CampaignRepository> logger)
+            ILogger<CampaignRepository> logger,
+            IMapper _mapper)
         {
             _repo = repo;
             _logger = logger;
+            this._mapper = _mapper;
         }
         // GET: CampaignsController
         public async Task<IActionResult> Index()
@@ -29,11 +33,7 @@ namespace PlayerLogMvc.Campaigns
                 _logger.LogInformation($"{actionName} Called");
                 var items = await _repo.FindAllAsync();
 
-                var model = items.Select(i => new CampaignVM
-                {
-                    CampaignId = i.CampaignId,
-                    CampaignName = i.CampaignName
-                });
+                var model = _mapper.Map<IEnumerable<Campaign>, IEnumerable<CampaignVM>>(items);
 
                 _logger.LogInformation($"{actionName} Success");
                 return View(model);
@@ -65,11 +65,7 @@ namespace PlayerLogMvc.Campaigns
                     _logger.LogWarning($"{actionName} Item not found - Id: {id}");
                     return RedirectToPage("/NotFound");
                 }
-                var model = new CampaignDetailsVM
-                {
-                    CampaignName = item.CampaignName,
-                    Npcs = item.Npcs
-                };
+                var model = _mapper.Map<Campaign, CampaignDetailsVM>(item);
 
                 _logger.LogInformation($"{actionName} Success");
                 return View(model);
@@ -112,10 +108,7 @@ namespace PlayerLogMvc.Campaigns
                     return View(model);
                 }
 
-                var item = new Campaign
-                {
-                    CampaignName = model.CampaignName
-                };
+                var item = _mapper.Map<CampaignVM, Campaign>(model);
 
                 var success = await _repo.CreateAsync(item);
 
@@ -156,11 +149,7 @@ namespace PlayerLogMvc.Campaigns
                     return RedirectToPage("/NotFound");
                 }
 
-                var model = new CampaignVM
-                {
-                    CampaignId = item.CampaignId,
-                    CampaignName = item.CampaignName
-                };
+                var model = _mapper.Map<Campaign, CampaignVM>(item);
 
                 _logger.LogInformation($"{actionName} Success");
                 return View("Edit", model);
@@ -194,11 +183,7 @@ namespace PlayerLogMvc.Campaigns
                     return RedirectToPage("/BadRequest");
                 }
 
-                var item = new Campaign
-                {
-                    CampaignId = model.CampaignId,
-                    CampaignName = model.CampaignName
-                };
+                var item = _mapper.Map<CampaignVM, Campaign>(model);
 
                 var success = await _repo.UpdateAsync(item);
 

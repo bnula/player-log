@@ -29,7 +29,7 @@ namespace PlayerLogMvc.Characters
             return await SaveAsync();
         }
 
-        public async Task<IList<Character>> FindAllAsync()
+        public async Task<IEnumerable<Character>> FindAllAsync()
         {
             var items = await _db.Characters.ToListAsync();
             return items;

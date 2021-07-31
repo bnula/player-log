@@ -27,6 +27,25 @@ namespace PlayerLogMvcUnitTests.Services
             return camps;
         }
 
+        public static List<CampaignVM> GetTestCampVMs()
+        {
+            var campVMs = new List<CampaignVM>
+            {
+                new CampaignVM
+                {
+                    CampaignId = 1,
+                    CampaignName = "test1"
+                },
+                new CampaignVM
+                {
+                    CampaignId = 2,
+                    CampaignName = "test2"
+                }
+            };
+
+            return campVMs;
+        }
+
         public static List<Npc> GetTestNpcs()
         {
             var npcs = new List<Npc>

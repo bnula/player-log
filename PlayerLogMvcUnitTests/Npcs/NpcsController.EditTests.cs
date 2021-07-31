@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PlayerLogMvc.Campaigns;
 using PlayerLogMvc.Locations;
+using PlayerLogMvc.Mappings;
 using PlayerLogMvc.Npcs;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,11 @@ namespace PlayerLogMvcUnitTests.Npcs
 {
     public class EditTests
     {
-        Mock<INpcRepository> _mockRepo;
-        NpcsController _sut;
-        Npc _savedNpc;
-        NpcDetailsVM _updatedNpc;
+        private readonly Mock<INpcRepository> _mockRepo;
+        private readonly NpcsController _sut;
+        private readonly IMapper _mapper;
+        private Npc _savedNpc;
+        private NpcDetailsVM _updatedNpc;
 
         public EditTests()
         {
@@ -26,7 +29,12 @@ namespace PlayerLogMvcUnitTests.Npcs
             var mockLogger = new Mock<ILogger<NpcRepository>>();
             var mockCampRepo = new Mock<ICampaignRepository>();
             var mockLocRepo = new Mock<ILocationRepository>();
-            _sut = new NpcsController(_mockRepo.Object, mockLogger.Object, campRepo: mockCampRepo.Object, locRepo: mockLocRepo.Object);
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile(new Maps());
+            });
+            _mapper = mapperConfig.CreateMapper();
+            _sut = new NpcsController(_mockRepo.Object, mockLogger.Object, campRepo: mockCampRepo.Object, locRepo: mockLocRepo.Object, mapper: _mapper);
             _savedNpc = new Npc
             {
                 NpcName = "test1",

@@ -1,7 +1,9 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Mappings;
 using PlayerLogMvcUnitTests.Services;
 using System;
 using System.Collections.Generic;
@@ -9,26 +11,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PlayerLogMvcUnitTests
+namespace PlayerLogMvcUnitTests.Campaigns
 {
     public class IndexTests
     {
 
         private readonly Mock<ICampaignRepository> _mockRepo;
         private readonly Mock<ILogger<CampaignRepository>> _mockLogger;
+        private readonly IMapper _mapper;
         private readonly CampaignsController _sut;
 
         public IndexTests()
         {
             _mockRepo = new Mock<ICampaignRepository>();
             _mockLogger = new Mock<ILogger<CampaignRepository>>();
-            _sut = new CampaignsController(_mockRepo.Object, _mockLogger.Object);
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile(new Maps());
+            });
+            _mapper = mapperConfig.CreateMapper();
+            _sut = new CampaignsController(_mockRepo.Object, _mockLogger.Object, _mapper);
         }
 
         [Fact]
         public async Task ReturnsAViewResult_WithAListOfCampaigns()
         {
             // Arrange
+            
             _mockRepo.Setup(repo => repo.FindAllAsync())
                 .ReturnsAsync(SampleDataCreators.GetTestCamps());
 

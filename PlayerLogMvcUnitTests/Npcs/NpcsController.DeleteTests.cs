@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PlayerLogMvc.Campaigns;
 using PlayerLogMvc.Locations;
+using PlayerLogMvc.Mappings;
 using PlayerLogMvc.Npcs;
 using System;
 using System.Collections.Generic;
@@ -15,8 +17,9 @@ namespace PlayerLogMvcUnitTests.Npcs
 {
     public class DeleteTests
     {
-        Mock<INpcRepository> _mockRepo;
-        NpcsController _sut;
+        private readonly Mock<INpcRepository> _mockRepo;
+        private readonly NpcsController _sut;
+        private readonly IMapper _mapper;
 
         public DeleteTests()
         {
@@ -24,7 +27,12 @@ namespace PlayerLogMvcUnitTests.Npcs
             var mockLogger = new Mock<ILogger<NpcRepository>>();
             var mockCampRepo = new Mock<ICampaignRepository>();
             var mockLocRepo = new Mock<ILocationRepository>();
-            _sut = new NpcsController(_mockRepo.Object, mockLogger.Object, campRepo: mockCampRepo.Object, locRepo: mockLocRepo.Object);
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile(new Maps());
+            });
+            _mapper = mapperConfig.CreateMapper();
+            _sut = new NpcsController(_mockRepo.Object, mockLogger.Object, campRepo: mockCampRepo.Object, locRepo: mockLocRepo.Object, mapper: _mapper);
         }
 
         [Fact]

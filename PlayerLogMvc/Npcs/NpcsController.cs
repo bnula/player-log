@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PlayerLogMvc.Campaigns;
 using PlayerLogMvc.Locations;
@@ -15,18 +16,21 @@ namespace PlayerLogMvc.Npcs
         private readonly INpcRepository _repo;
         private readonly ICampaignRepository _campRepo;
         private readonly ILocationRepository _locRepo;
+        private readonly IMapper _mapper;
         private readonly ILogger<NpcRepository> _logger;
 
         public NpcsController(
             INpcRepository repo,
             ILogger<NpcRepository> logger,
             ICampaignRepository campRepo,
-            ILocationRepository locRepo)
+            ILocationRepository locRepo,
+            IMapper mapper)
         {
             _repo = repo;
             _logger = logger;
             _campRepo = campRepo;
             _locRepo = locRepo;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
@@ -36,13 +40,7 @@ namespace PlayerLogMvc.Npcs
                 _logger.LogInformation($"{actionName} Called");
                 var items = await _repo.FindAllAsync();
 
-                var model = items.Select(i => new NpcVM
-                {
-                    NpcId = i.NpcId,
-                    NpcName = i.NpcName,
-                    Allegiance = i.Allegiance,
-                    Campaign = i.Campaign
-                });
+                var model = _mapper.Map<IEnumerable<Npc>, IEnumerable<NpcVM>>(items);
 
                 _logger.LogInformation($"{actionName} Success");
                 return View(model);
@@ -74,17 +72,7 @@ namespace PlayerLogMvc.Npcs
                     return RedirectToPage("/NotFound");
                 }
 
-                var model = new NpcDetailsVM
-                {
-                    NpcId = item.NpcId,
-                    NpcName = item.NpcName,
-                    Campaign = item.Campaign,
-                    Description = item.Description,
-                    Notes = item.Notes,
-                    Allegiance = item.Allegiance,
-                    HomeLocation = item.HomeLocation,
-                    CurrentLocation = item.CurrentLocation
-                };
+                var model = _mapper.Map<Npc, NpcDetailsVM>(item);
 
                 _logger.LogInformation($"{actionName} Success");
                 return View(model);
@@ -116,16 +104,7 @@ namespace PlayerLogMvc.Npcs
                     return View(model);
                 }
 
-                var item = new Npc
-                {
-                    NpcName = model.NpcName,
-                    Description = model.Description,
-                    Allegiance = model.Allegiance,
-                    Notes = model.Notes,
-                    CampaignId = model.Campaign.CampaignId,
-                    HomeLocationId = model.HomeLocation.LocationId,
-                    CurrentLocationId = model.CurrentLocation.LocationId
-                };
+                var item = _mapper.Map<NpcDetailsVM, Npc>(model);
 
                 var success = await _repo.CreateAsync(item);
 
@@ -168,17 +147,7 @@ namespace PlayerLogMvc.Npcs
                     return RedirectToPage("/NotFound");
                 }
 
-                var model = new NpcDetailsVM
-                {
-                    NpcId = item.NpcId,
-                    NpcName = item.NpcName,
-                    Campaign = item.Campaign,
-                    Description = item.Description,
-                    Notes = item.Notes,
-                    Allegiance = item.Allegiance,
-                    CurrentLocation = item.CurrentLocation,
-                    HomeLocation = item.HomeLocation
-                };
+                var model = _mapper.Map<Npc, NpcDetailsVM>(item);
 
                 return View("Edit", model);
             }
@@ -210,17 +179,7 @@ namespace PlayerLogMvc.Npcs
                     return RedirectToPage("/BadRequest");
                 }
 
-                var item = new Npc
-                {
-                    NpcName = model.NpcName,
-                    NpcId = model.NpcId,
-                    Description = model.Description,
-                    Allegiance = model.Allegiance,
-                    Notes = model.Notes,
-                    CampaignId = model.Campaign.CampaignId,
-                    HomeLocationId = model.HomeLocation.LocationId,
-                    CurrentLocationId = model.CurrentLocation.LocationId
-                };
+                var item = _mapper.Map<NpcDetailsVM, Npc>(model);
 
                 var success = await _repo.UpdateAsync(item);
 

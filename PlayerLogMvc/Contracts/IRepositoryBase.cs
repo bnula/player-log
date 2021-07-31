@@ -8,7 +8,7 @@ namespace PlayerLogMvc.Contracts
     public interface IRepositoryBase<T> where T : class
     {
         Task<bool> SaveAsync();
-        Task<IList<T>> FindAllAsync();
+        Task<IEnumerable<T>> FindAllAsync();
         Task<T> FindByIdAsync(int id);
         Task<bool> CreateAsync(T entity);
         Task<bool> UpdateAsync(T entity);

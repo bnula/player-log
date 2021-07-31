@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +17,19 @@ namespace PlayerLogMvcUnitTests.Campaigns
     {
         private readonly Mock<ICampaignRepository> _mockRepo;
         private readonly CampaignsController _sut;
-        private readonly Mock<ILogger<CampaignRepository>> _logger;
+        private readonly Mock<ILogger<CampaignRepository>> _mockLogger;
+        private readonly IMapper _mapper;
 
         public DetailsTests()
         {
             _mockRepo = new Mock<ICampaignRepository>();
-            _logger = new Mock<ILogger<CampaignRepository>>();
-            _sut = new CampaignsController(_mockRepo.Object, _logger.Object);
+            _mockLogger = new Mock<ILogger<CampaignRepository>>();
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile(new Maps());
+            });
+            _mapper = mapperConfig.CreateMapper();
+            _sut = new CampaignsController(_mockRepo.Object, _mockLogger.Object, _mapper);
         }
 
         [Fact]

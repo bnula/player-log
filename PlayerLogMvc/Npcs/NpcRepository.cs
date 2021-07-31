@@ -29,7 +29,7 @@ namespace PlayerLogMvc.Npcs
             return await SaveAsync();
         }
 
-        public async Task<IList<Npc>> FindAllAsync()
+        public async Task<IEnumerable<Npc>> FindAllAsync()
         {
             var items = await _db.Npcs
                 .Include(r => r.Campaign)

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PlayerLogMvc.Campaigns;
 using PlayerLogMvc.Locations;
+using PlayerLogMvc.Mappings;
 using PlayerLogMvc.Npcs;
 using PlayerLogMvcUnitTests.Services;
 using System;
@@ -16,9 +18,10 @@ namespace PlayerLogMvcUnitTests.Npcs
 {
     public class IndexTests
     {
-        Mock<INpcRepository> _mockRepo;
-        Mock<ILogger<NpcRepository>> _mockLogger;
-        NpcsController _sut;
+        private readonly Mock <INpcRepository> _mockRepo;
+        private readonly Mock<ILogger<NpcRepository>> _mockLogger;
+        private readonly NpcsController _sut;
+        private readonly IMapper _mapper;
 
         public IndexTests()
         {
@@ -26,7 +29,12 @@ namespace PlayerLogMvcUnitTests.Npcs
             _mockLogger = new Mock<ILogger<NpcRepository>>();
             var mockCampRepo = new Mock<ICampaignRepository>();
             var mockLocRepo = new Mock<ILocationRepository>();
-            _sut = new NpcsController(_mockRepo.Object, _mockLogger.Object, campRepo: mockCampRepo.Object, locRepo: mockLocRepo.Object);
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile(new Maps());
+            });
+            _mapper = mapperConfig.CreateMapper();
+            _sut = new NpcsController(_mockRepo.Object, _mockLogger.Object, campRepo: mockCampRepo.Object, locRepo: mockLocRepo.Object, mapper: _mapper);
         }
 
         [Fact]

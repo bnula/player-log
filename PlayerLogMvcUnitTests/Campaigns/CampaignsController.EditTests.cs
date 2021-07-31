@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,17 +15,23 @@ namespace PlayerLogMvcUnitTests.Campaigns
 {
     public class EditTests
     {
-        Mock<ICampaignRepository> _mockRepo;
-        Mock<ILogger<CampaignRepository>> _mockLogger;
-        CampaignsController _sut;
-        Campaign _savedCamp;
-        CampaignVM _updatedCamp;
+        private readonly Mock<ICampaignRepository> _mockRepo;
+        private readonly Mock<ILogger<CampaignRepository>> _mockLogger;
+        private readonly CampaignsController _sut;
+        private Campaign _savedCamp;
+        private CampaignVM _updatedCamp;
+        private readonly IMapper _mapper;
 
         public EditTests()
         {
             _mockRepo = new Mock<ICampaignRepository>();
             _mockLogger = new Mock<ILogger<CampaignRepository>>();
-            _sut = new CampaignsController(_mockRepo.Object, _mockLogger.Object);
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new Maps());
+            });
+            _mapper = mapperConfig.CreateMapper();
+            _sut = new CampaignsController(_mockRepo.Object, _mockLogger.Object, _mapper);
             _savedCamp = new Campaign
             {
                 CampaignId = 1,
@@ -34,7 +42,7 @@ namespace PlayerLogMvcUnitTests.Campaigns
                 CampaignId = 1,
                 CampaignName = "changed"
             };
-        }
+    }
 
         [Fact]
         public async Task ValidId_ReturnViewWithModel()
@@ -52,7 +60,7 @@ namespace PlayerLogMvcUnitTests.Campaigns
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsType<CampaignVM>(viewResult.Model);
             Assert.Equal("Edit", viewResult.ViewName);
-            Assert.Equal("test", model.CampaignName);
+            Assert.Equal(_savedCamp.CampaignName, model.CampaignName);
         }
 
         [Fact]

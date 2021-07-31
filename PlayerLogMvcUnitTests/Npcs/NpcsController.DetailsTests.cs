@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PlayerLogMvc.Campaigns;
 using PlayerLogMvc.Locations;
+using PlayerLogMvc.Mappings;
 using PlayerLogMvc.Npcs;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,10 @@ namespace PlayerLogMvcUnitTests.Npcs
 {
     public class DetailsTests
     {
-        Mock<INpcRepository> _mockRepo;
-        NpcsController _sut;
-        Npc _savedNpc;
-        NpcDetailsVM _updatedNpc;
+        private readonly Mock<INpcRepository> _mockRepo;
+        private readonly NpcsController _sut;
+        private readonly IMapper _mapper;
+        private Npc _savedNpc;
 
         public DetailsTests()
         {
@@ -26,7 +28,12 @@ namespace PlayerLogMvcUnitTests.Npcs
             var mockLogger = new Mock<ILogger<NpcRepository>>();
             var mockCampRepo = new Mock<ICampaignRepository>();
             var mockLocRepo = new Mock<ILocationRepository>();
-            _sut = new NpcsController(_mockRepo.Object, mockLogger.Object, campRepo: mockCampRepo.Object, locRepo: mockLocRepo.Object);
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile(new Maps());
+            });
+            _mapper = mapperConfig.CreateMapper();
+            _sut = new NpcsController(_mockRepo.Object, mockLogger.Object, campRepo: mockCampRepo.Object, locRepo: mockLocRepo.Object, mapper: _mapper);
             _savedNpc = new Npc
             {
                 NpcName = "test1",
@@ -37,30 +44,14 @@ namespace PlayerLogMvcUnitTests.Npcs
                 CurrentLocation = new Location { LocationId = 1 },
                 HomeLocation = new Location { LocationId = 1 }
             };
-            _updatedNpc = new NpcDetailsVM
-            {
-                NpcName = "changed",
-                Description = "changed",
-                Notes = "changed",
-                Allegiance = "changed",
-                Campaign = new Campaign { CampaignId = 1 },
-                CurrentLocation = new Location { LocationId = 1 },
-                HomeLocation = new Location { LocationId = 1 }
-            };
         }
 
         [Fact]
         public async Task ValidId_ReturnViewWithViewModel()
         {
             // Arrange
-            var npc = new Npc
-            {
-                NpcId = 1,
-                NpcName = "test"
-            };
-
             _mockRepo.Setup(repo => repo.FindByIdAsync(1))
-                .ReturnsAsync(npc);
+                .ReturnsAsync(_savedNpc);
 
 
             // Act
@@ -69,7 +60,7 @@ namespace PlayerLogMvcUnitTests.Npcs
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<NpcDetailsVM>(viewResult.Model);
-            Assert.Equal(npc.NpcName, model.NpcName);
+            Assert.Equal(_savedNpc.NpcName, model.NpcName);
         }
 
         [Fact]

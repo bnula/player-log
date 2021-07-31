@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using PlayerLogMvc.Campaigns;
 using PlayerLogMvc.Locations;
+using PlayerLogMvc.Mappings;
 using PlayerLogMvc.Npcs;
 using System;
 using System.Collections.Generic;
@@ -15,10 +17,11 @@ namespace PlayerLogMvcUnitTests.Npcs
 {
     public class CreateTests
     {
-        Mock<INpcRepository> _mockRepo;
-        Mock<ILogger<NpcRepository>> _mockLogger;
-        NpcsController _sut;
-        NpcDetailsVM _newNpc;
+        private readonly Mock<INpcRepository> _mockRepo;
+        private readonly Mock<ILogger<NpcRepository>> _mockLogger;
+        private readonly NpcsController _sut;
+        private readonly IMapper _mapper;
+        private NpcDetailsVM  _newNpc;
 
         public CreateTests()
         {
@@ -26,7 +29,12 @@ namespace PlayerLogMvcUnitTests.Npcs
             _mockLogger = new Mock<ILogger<NpcRepository>>();
             var mockCampRepo = new Mock<ICampaignRepository>();
             var mockLocRepo = new Mock<ILocationRepository>();
-            _sut = new NpcsController(_mockRepo.Object, _mockLogger.Object, campRepo: mockCampRepo.Object, locRepo: mockLocRepo.Object);
+            var mapperConfig = new MapperConfiguration(c =>
+            {
+                c.AddProfile(new Maps());
+            });
+            _mapper = mapperConfig.CreateMapper();
+            _sut = new NpcsController(_mockRepo.Object, _mockLogger.Object, campRepo: mockCampRepo.Object, locRepo: mockLocRepo.Object, mapper: _mapper);
             _newNpc = new NpcDetailsVM
             {
                 NpcName = "test1",
