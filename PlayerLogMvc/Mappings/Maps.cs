@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Locations;
 using PlayerLogMvc.Npcs;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace PlayerLogMvc.Mappings
             CreateMap<Campaign, CampaignDetailsVM>().ReverseMap();
             CreateMap<Npc, NpcVM>().ReverseMap();
             CreateMap<Npc, NpcDetailsVM>().ReverseMap();
+            CreateMap<Location, LocationVM>().ReverseMap();
+            CreateMap<Location, LocationDetailsVM>().ReverseMap();
         }
     }
 }

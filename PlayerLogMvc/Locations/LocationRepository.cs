@@ -30,13 +30,20 @@ namespace PlayerLogMvc.Locations
 
         public async Task<IEnumerable<Location>> FindAllAsync()
         {
-            var items = await _db.Locations.ToListAsync();
+            var items = await _db.Locations
+                .Include(l => l.Campaign)
+                .ToListAsync();
             return items;
         }
 
         public async Task<Location> FindByIdAsync(int id)
         {
-            var item = await _db.Locations.FirstOrDefaultAsync(i => i.LocationId == id);
+            var item = await _db.Locations
+                .Where(l => l.LocationId == id)
+                .Include(l => l.Campaign)
+                .Include(l => l.HomeNpcs)
+                .Include(l => l.CurrentNpcs)
+                .FirstOrDefaultAsync();
             return item;
         }
 
