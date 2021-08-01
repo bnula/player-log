@@ -19,11 +19,5 @@ namespace PlayerLogMvc.Locations
         public string LocationInventory { get; set; }
         public int CampaignId { get; set; }
         public Campaign Campaign { get; set; }
-        [ForeignKey("HomeLocationId")]
-        public IEnumerable<Npc> HomeNpcs { get; set; }
-        public int HomeLocationId { get; set; }
-        [ForeignKey("CurrentLocationId")]
-        public IEnumerable<Npc> CurrentNpcs { get; set; }
-        public int CurrentLocationId { get; set; }
     }
 }

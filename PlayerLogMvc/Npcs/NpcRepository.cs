@@ -37,6 +37,22 @@ namespace PlayerLogMvc.Npcs
             return items;
         }
 
+        public async Task<IEnumerable<Npc>> FindByCurrentLocationId(int id)
+        {
+            var items = await _db.Npcs
+                .Where(n => n.CurrentLocationId == id)
+                .ToListAsync();
+            return items;
+        }
+
+        public async Task<IEnumerable<Npc>> FindByHomeLocationId(int id)
+        {
+            var items = await _db.Npcs
+                .Where(n => n.HomeLocationId == id)
+                .ToListAsync();
+            return items;
+        }
+
         public async Task<Npc> FindByIdAsync(int id)
         {
             var item = await _db.Npcs
@@ -55,5 +71,7 @@ namespace PlayerLogMvc.Npcs
             _db.Npcs.Update(entity);
             return await SaveAsync();
         }
+
+
     }
 }

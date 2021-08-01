@@ -30,7 +30,6 @@ namespace PlayerLogMvc.Campaigns
         public async Task<IEnumerable<Campaign>> FindAllAsync()
         {
             return await _db.Campaigns
-                .Include(t => t.Npcs)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -39,6 +38,10 @@ namespace PlayerLogMvc.Campaigns
         {
             return await _db.Campaigns
                 .Include(t => t.Npcs)
+                .Include(t => t.Locations)
+                .Include(t => t.Quests)
+                .Include(t => t.Armies)
+                .Include(t => t.Characters)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(t => t.CampaignId == id);
         }

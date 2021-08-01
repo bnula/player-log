@@ -41,8 +41,6 @@ namespace PlayerLogMvc.Locations
             var item = await _db.Locations
                 .Where(l => l.LocationId == id)
                 .Include(l => l.Campaign)
-                .Include(l => l.HomeNpcs)
-                .Include(l => l.CurrentNpcs)
                 .FirstOrDefaultAsync();
             return item;
         }

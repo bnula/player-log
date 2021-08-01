@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Npcs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,18 +17,21 @@ namespace PlayerLogMvc.Locations
         private readonly ILogger<LocationsController> _logger;
         private readonly IMapper _mapper;
         private readonly ICampaignRepository _campRepo;
+        private readonly INpcRepository _npcRepo;
 
         public LocationsController(
             ILocationRepository repo,
             ILogger<LocationsController> logger,
             IMapper mapper,
-            ICampaignRepository campRepo
+            ICampaignRepository campRepo,
+            INpcRepository npcRepo
             )
         {
             _repo = repo;
             _logger = logger;
             _mapper = mapper;
             _campRepo = campRepo;
+            _npcRepo = npcRepo;
         }
 
         [HttpGet]
@@ -40,40 +44,6 @@ namespace PlayerLogMvc.Locations
                 var items = await _repo.FindAllAsync();
                 var model = _mapper.Map<IEnumerable<Location>, IEnumerable<LocationVM>>(items);
                 _logger.LogInformation($"{actionName} Success");
-                return View(model);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"{actionName} Failed - {ex}");
-                return RedirectToPage("/InternalServerError");
-            }
-        }
-
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> Details(int id)
-        {
-            var actionName = "Locations - Details:";
-            try
-            {
-                _logger.LogInformation($"{actionName} Called - Id: {id}");
-
-                if (id < 1)
-                {
-                    _logger.LogWarning($"{actionName} Bad Request - Invalid Id: {id}");
-                    return RedirectToPage("/BadRequest");
-                }
-
-                var item = await _repo.FindByIdAsync(id);
-
-                if (item is null)
-                {
-                    _logger.LogWarning($"{actionName} Item Not Found - Id: {id}");
-                    return RedirectToPage("/NotFound");
-                }
-
-                var model = _mapper.Map<Location, LocationDetailsVM>(item);
-
-                _logger.LogInformation($"{actionName} Success - Id: {id}");
                 return View(model);
             }
             catch (Exception ex)
@@ -131,7 +101,42 @@ namespace PlayerLogMvc.Locations
             }
         }
 
-        [HttpGet("{id:int}")]
+        public async Task<IActionResult> Details(int id)
+        {
+            ViewBag.HomeNpcs = await _npcRepo.FindByHomeLocationId(id);
+            ViewBag.CurrentNpcs = await _npcRepo.FindByCurrentLocationId(id);
+
+            var actionName = "Locations - Details:";
+            try
+            {
+                _logger.LogInformation($"{actionName} Called - Id: {id}");
+
+                if (id < 1)
+                {
+                    _logger.LogWarning($"{actionName} Bad Request - Invalid Id: {id}");
+                    return RedirectToPage("/BadRequest");
+                }
+
+                var item = await _repo.FindByIdAsync(id);
+
+                if (item is null)
+                {
+                    _logger.LogWarning($"{actionName} Item Not Found - Id: {id}");
+                    return RedirectToPage("/NotFound");
+                }
+
+                var model = _mapper.Map<Location, LocationDetailsVM>(item);
+
+                _logger.LogInformation($"{actionName} Success - Id: {id}");
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"{actionName} Failed - {ex}");
+                return RedirectToPage("/InternalServerError");
+            }
+        }
+
         public async Task<IActionResult> Edit(int id)
         {
             ViewBag.Camps = await _campRepo.FindAllAsync();

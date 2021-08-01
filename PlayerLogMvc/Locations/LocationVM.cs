@@ -29,7 +29,6 @@ namespace PlayerLogMvc.Locations
         public string LocationInventory { get; set; }
         [Required]
         public Campaign Campaign { get; set; }
-        public IEnumerable<Npc> HomeNpcs { get; set; }
-        public IEnumerable<Npc> CurrentNpcs { get; set; }
+        public int CampaignId { get; set; }
     }
 }

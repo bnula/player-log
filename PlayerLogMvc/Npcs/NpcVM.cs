@@ -29,11 +29,14 @@ namespace PlayerLogMvc.Npcs
         public string Description { get; set; }
         public string Notes { get; set; }
         [Required]
+        public int HomeLocationId { get; set; }
         public Location HomeLocation { get; set; }
         [Required]
+        public int CurrentLocationId { get; set; }
         public Location CurrentLocation { get; set; }
-        [Required]
         public Campaign Campaign { get; set; }
+        [Required]
+        public int CampaignId { get; set; }
     }
 
 }

@@ -1,10 +1,10 @@
-﻿@model NpcDetailsVM
+﻿@model LocationDetailsVM
 @{
-    ViewBag.Title = $"Edit {Model.NpcName}";
+    ViewBag.Title = $"Edit {Model.LocationName}";
 }
 
 <form class="card bg-light col-md-6 p-1 m-1 d-inline-block" asp-action="Edit">
-    <input type="hidden" asp-for="NpcId" />
+    <input type="hidden" asp-for="LocationId" />
     <div class="card-header">
         <h2>@ViewBag.Title</h2>
     </div>
@@ -13,7 +13,7 @@
             <div class="input-group-prepend flex-column col-md-3 pr-2">
                 <span class="input-group-text" id="inputGroup-sizing-default">Name</span>
             </div>
-            <input asp-for="NpcName" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="@Model.NpcName">
+            <input asp-for="LocationName" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="@Model.LocationName">
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend flex-column col-md-3 pr-2">
@@ -28,34 +28,16 @@
             </select>
         </div>
         <div class="input-group mb-3">
-            <div class="input-group-prepend flex-column col-md-3 pr-2">
-                <label class="input-group-text" for="inputGroupSelect01">Home L.</label>
-            </div>
-            <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.HomeLocationId">
-                <option selected value="@Model.HomeLocationId">Choose...</option>
-                @foreach (var l in ViewBag.Locations)
-                {
-                    <option value="@l.LocationId">@l.LocationName</option>
-                }
-            </select>
-        </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend flex-column col-md-3 pr-2">
-                <label class="input-group-text" for="inputGroupSelect01">Current L.</label>
-            </div>
-            <select class="custom-select" id="inputGroupSelect01" asp-for="@Model.CurrentLocationId">
-                <option selected value="@Model.CurrentLocationId">Choose...</option>
-                @foreach (var l in ViewBag.Locations)
-                {
-                    <option value="@l.LocationId">@l.LocationName</option>
-                }
-            </select>
-        </div>
-        <div class="input-group mb-3">
             <div class="input-group-prepend flex-column col-md-3 text-left pr-2">
-                <span class="input-group-text" id="inputGroup-sizing-default">Allegiance</span>
+                <span class="input-group-text" id="inputGroup-sizing-default">Type</span>
             </div>
-            <input asp-for="Allegiance" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="@Model.Allegiance">
+            <input asp-for="LocationType" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="@Model.LocationType">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend flex-column col-md-3 pr-2">
+                <span class="input-group-text" id="inputGroup-sizing-default">Inventory</span>
+            </div>
+            <textarea asp-for="LocationInventory" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">@Model.LocationInventory</textarea>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-prepend flex-column col-md-3 pr-2">
@@ -75,7 +57,7 @@
             <button class="btn btn-success m-2 rounded" type="submit">
                 <i class="fas fa-check"></i> Edit
             </button>
-            <a asp-controller="Npcs" asp-action="Index" class="btn btn-secondary m-2 rounded">
+            <a asp-controller="Locations" asp-action="Index" class="btn btn-secondary m-2 rounded">
                 <i class="fas fa-arrow-alt-circle-left"></i> Back to List
             </a>
         </div>

@@ -18,6 +18,47 @@
         </ul>
     </li>
     <li>Locations</li>
+    <li>
+        <ul>
+            @foreach (var loc in Model.Locations)
+            {
+                <li><a asp-controller="Locations" asp-action="Details" asp-route-for="@loc.LocationId">@loc.LocationName</a></li>
+            }
+        </ul>
+    </li>
     <li>Quests</li>
+    <li>
+        <ul>
+            @foreach (var q in Model.Quests)
+            {
+                <li><a asp-controller="Quests" asp-action="Details" asp-route-for="@q.QuestId">@q.QuestName</a></li>
+            }
+        </ul>
+    </li>
     <li>Armies</li>
+    <li>
+        <ul>
+            @foreach (var a in Model.Armies)
+            {
+                <li><a asp-controller="Armies" asp-action="Details" asp-route-for="@a.ArmyId">@a.Description</a></li>
+            }
+        </ul>
+    </li>
+    <li>Characters</li>
+    <li>
+        <ul>
+            @foreach (var ch in Model.Characters)
+            {
+                <li><a asp-controller="Characters" asp-action="Details" asp-route-for="@ch.CharacterId">@ch.CharacterName</a></li>
+            }
+        </ul>
+    </li>
 </ul>
+<div class="btn-group">
+    <a class="btn btn-primary m-2 rounded" asp-controller="Campaigns" asp-action="Edit" asp-route-id="@Model.CampaignId">
+        <i class="fas fa-edit"></i> Edit
+    </a>
+    <a asp-controller="Campaigns" asp-action="Index" type="submit" class="btn btn-secondary m-2 rounded">
+        <i class="fas fa-arrow-alt-circle-left"></i> Back to List
+    </a>
+</div>

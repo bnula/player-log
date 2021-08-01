@@ -9,6 +9,7 @@ namespace PlayerLogMvc.Npcs
 {
     public interface INpcRepository : IRepositoryBase<Npc>
     {
-        
+        Task<IEnumerable<Npc>> FindByHomeLocationId(int id);
+        Task<IEnumerable<Npc>> FindByCurrentLocationId(int id);
     }
 }

@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-page="/Index">Player Log</a>
+                <a class="navbar-brand" asp-page="/Index"><i class="fas fa-scroll"></i> Player Log</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,10 +20,29 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Campaigns" asp-action="Index">Campaigns</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Campaigns" asp-action="Index">
+                                <i class="fas fa-compass"></i> Campaigns
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Npcs" asp-action="Index">Npcs</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Npcs" asp-action="Index">
+                                <i class="fas fa-address-book"></i> Npcs
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Locations" asp-action="Index">
+                                <i class="fas fa-map-marked-alt"></i> Locations
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Quests" asp-action="Index">
+                                <i class="fas fa-question-circle"></i> Quests
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Armies" asp-action="Index">
+                                <i class="fas fa-users"></i> Armies
+                            </a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

@@ -1,0 +1,66 @@
+﻿@model LocationDetailsVM
+@{
+    ViewBag.Title = $"{Model.LocationName} Details";
+}
+
+<div class="card bg-light col-md-6 p-1 m-1 d-inline-block">
+    <div class="card-header">
+        <h2>@ViewBag.Title</h2>
+    </div>
+    <div class=" card-body">
+        <div class="card-group">
+            <label asp-for="Campaign" class="col-sm-3 text-info">Campaign:&nbsp;</label>
+            <p>@Model.Campaign.CampaignName</p>
+            <hr />
+        </div>
+        <div class="card-group">
+            <label asp-for="LocationType" class="col-sm-3 text-info">Type:&nbsp;</label>
+            <p>@Model.LocationType</p>
+            <hr />
+        </div>
+        <div class="card-group">
+            <label asp-for="LocationInventory" class="col-sm-3 text-info">Inventory:&nbsp;</label>
+            <p>@Model.LocationInventory</p>
+            <hr />
+        </div>
+        <row class="card-group">
+            <div class="card-group d-inline-block col-md-6 d-block">
+                <label class="col-sm-3 text-info d-flex w-auto">Home Npcs:&nbsp;</label>
+                <ul>
+                    @foreach (var n in ViewBag.HomeNpcs)
+                    {
+                        <li><a asp-controller="Npcs" asp-action="Details" asp-route-id="@n.NpcId">@n.NpcName</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="card-group d-inline-block col-md-6">
+                <label class="col-sm-3 text-info d-flex w-auto">Current Npcs:&nbsp;</label>
+                <ul class="d-block">
+                    @foreach (var n in ViewBag.CurrentNpcs)
+                    {
+                        <li><a asp-controller="Npcs" asp-action="Details" asp-route-id="@n.NpcId">@n.NpcName</a></li>
+                    }
+                </ul>
+            </div>
+        </row>
+        <div class="card-group">
+            <label asp-for="Description" class="col-sm-3 text-info">Description:&nbsp;</label>
+            <p>@Model.Description</p>
+            <hr />
+        </div>
+        <div class="card-group">
+            <label asp-for="Notes" class="col-sm-3 text-info">Notes:&nbsp;</label>
+            <p>@Model.Notes</p>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="btn-group">
+            <a class="btn btn-primary m-2 rounded" asp-controller="Locations" asp-action="Edit" asp-route-id="@Model.LocationId">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a asp-controller="Locations" asp-action="Index" type="submit" class="btn btn-secondary m-2 rounded">
+                <i class="fas fa-arrow-alt-circle-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+</div>
