@@ -14,73 +14,82 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace PlayerLogMvcUnitTests.Npcs
+namespace PlayerLogMvcUnitTests.Locations
 {
     public class IndexTests
     {
-        private readonly Mock <INpcRepository> _mockRepo;
-        private readonly Mock<ILogger<NpcRepository>> _mockLogger;
-        private readonly NpcsController _sut;
+        private readonly LocationsController _sut;
+        private readonly Mock<ILocationRepository> _mockRepo;
         private readonly IMapper _mapper;
+        private readonly Mock<ILogger<LocationsController>> _logger;
 
         public IndexTests()
         {
-            _mockRepo = new Mock<INpcRepository>();
-            _mockLogger = new Mock<ILogger<NpcRepository>>();
-            var mockCampRepo = new Mock<ICampaignRepository>();
-            var mockLocRepo = new Mock<ILocationRepository>();
+            _mockRepo = new Mock<ILocationRepository>();
+            var _campRepo = new Mock<ICampaignRepository>();
+            var _npcRepo = new Mock<INpcRepository>();
             var mapperConfig = new MapperConfiguration(c =>
             {
                 c.AddProfile(new Maps());
             });
             _mapper = mapperConfig.CreateMapper();
-            _sut = new NpcsController(_mockRepo.Object, _mockLogger.Object, campRepo: mockCampRepo.Object, locRepo: mockLocRepo.Object, mapper: _mapper);
+            _logger = new Mock<ILogger<LocationsController>>();
+            _sut = new LocationsController(
+                repo: _mockRepo.Object,
+                logger: _logger.Object,
+                mapper: _mapper,
+                campRepo: _campRepo.Object,
+                npcRepo: _npcRepo.Object
+                );
         }
 
         [Fact]
-        public async Task ReturnsAViewResult_WithAListOfCampaigns()
+        public async Task OnCall_ReturnViewWithModel()
         {
             // Arrange
             _mockRepo.Setup(repo => repo.FindAllAsync())
-                .ReturnsAsync(SampleDataCreators.GetTestNpcs());
+                .ReturnsAsync(SampleDataCreators.GetTestLocations());
 
             // Act
             var result = await _sut.Index();
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<NpcVM>>(viewResult.ViewData.Model);
-            Assert.Equal(2, model.Count());
+            var model = Assert.IsAssignableFrom<List<LocationVM>>(viewResult.Model);
+            Assert.Equal("Index", viewResult.ViewName);
+            Assert.Equal(2, model.Count);
         }
 
         [Fact]
-        public async Task NoExistingCampaigns_ReturnEmptyList()
+        public async Task NoLocations_ReturnViewWithEmptyList()
         {
             // Arrange
             _mockRepo.Setup(repo => repo.FindAllAsync())
-                .ReturnsAsync(new List<Npc>());
+                .ReturnsAsync(new List<Location>());
 
             // Act
             var result = await _sut.Index();
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<NpcVM>>(viewResult.ViewData.Model);
+            var model = Assert.IsAssignableFrom<List<LocationVM>>(viewResult.Model);
+            Assert.Equal("Index", viewResult.ViewName);
             Assert.Empty(model);
         }
 
         [Fact]
-        public async Task ThrowsError_ReturnInternalServerError()
+        public async Task ThrowError_ReturnInternalServerError()
         {
             // Arrange
             _mockRepo.Setup(repo => repo.FindAllAsync())
-                .Throws(new Exception());
+                .ThrowsAsync(new AccessViolationException());
 
             // Act
             var result = await _sut.Index();
 
             // Assert
             var redirectToPageResult = Assert.IsType<RedirectToPageResult>(result);
+            _mockRepo.Verify(repo => repo.FindAllAsync(), Times.Once);
             Assert.Equal("/InternalServerError", redirectToPageResult.PageName);
         }
     }

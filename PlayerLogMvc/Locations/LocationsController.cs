@@ -44,7 +44,7 @@ namespace PlayerLogMvc.Locations
                 var items = await _repo.FindAllAsync();
                 var model = _mapper.Map<IEnumerable<Location>, IEnumerable<LocationVM>>(items);
                 _logger.LogInformation($"{actionName} Success");
-                return View(model);
+                return View("Index", model);
             }
             catch (Exception ex)
             {
@@ -80,6 +80,11 @@ namespace PlayerLogMvc.Locations
                 {
                     _logger.LogWarning($"{actionName} Failed - empty model");
                     return RedirectToPage("/BadRequest");
+                }
+                if (!ModelState.IsValid)
+                {
+                    ModelState.AddModelError("x", "Please fix validation errors");
+                    return View("Create", model);
                 }
 
                 var item = _mapper.Map<LocationDetailsVM, Location>(model);

@@ -1,4 +1,5 @@
 ﻿using PlayerLogMvc.Campaigns;
+using PlayerLogMvc.Locations;
 using PlayerLogMvc.Npcs;
 using System;
 using System.Collections.Generic;
@@ -25,25 +26,6 @@ namespace PlayerLogMvcUnitTests.Services
             });
 
             return camps;
-        }
-
-        public static List<CampaignVM> GetTestCampVMs()
-        {
-            var campVMs = new List<CampaignVM>
-            {
-                new CampaignVM
-                {
-                    CampaignId = 1,
-                    CampaignName = "test1"
-                },
-                new CampaignVM
-                {
-                    CampaignId = 2,
-                    CampaignName = "test2"
-                }
-            };
-
-            return campVMs;
         }
 
         public static List<Npc> GetTestNpcs()
@@ -75,6 +57,35 @@ namespace PlayerLogMvcUnitTests.Services
         };
 
             return npcs;
+        }
+
+        public static List<Location> GetTestLocations()
+        {
+            var locs = new List<Location>
+            {
+                new Location
+                {
+                    LocationId = 1,
+                    LocationName = "test1",
+                    Description = "test1",
+                    LocationInventory = "test1",
+                    LocationType = "test1",
+                    Notes = "test1",
+                    Campaign = new Campaign { CampaignId = 1 }
+                },
+                new Location
+                {
+                    LocationId = 2,
+                    LocationName = "test2",
+                    Description = "test2",
+                    LocationInventory = "test2",
+                    LocationType = "test2",
+                    Notes = "test2",
+                    Campaign = new Campaign { CampaignId = 1 }
+                }
+            };
+
+            return locs;
         }
     }
 
